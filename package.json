@@ -4,10 +4,14 @@
   "description": "helper for amqp",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test mocha --inspect=0.0.0.0:5858 --timeout 15000 --require babel-register ./tests/*.*.spec.js ./tests/*/*.*.spec.js ./tests/*/*/*.*.spec.js --watch"
+    "dev": "nodemon --inspect=localhost:6868 ./index.js --exec \"node -r babel-register\"",
+    "test": "NODE_ENV=test mocha --inspect=localhost:5858 --timeout 15000 --require babel-register ./tests/*.*.spec.js ./tests/*/*.*.spec.js --watch"
   },
   "author": "Antoni <email.to.antoni@gmail.com>",
   "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.5.1"
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",

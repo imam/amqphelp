@@ -3,23 +3,16 @@
 
 const pathfinder = require(process.env.PWD + '/pathfinder');
 const expect = require('chai').expect;
-const { MessagingUtil } = require(pathfinder.to_messaging_helper() + "/util.helper");
-const { MessagingChannel } = require(pathfinder.to_messaging_helper() + "/channel.helper");
-
-let server  = require(pathfinder.to_app() + '/index');
-let env  = require(pathfinder.to_env());
+const { MessagingUtil } = require(pathfinder.to_app() + "/util.helper");
+const { MessagingChannel } = require(pathfinder.to_app() + "/channel.helper");
 
 const amqpl = require('amqplib');
 const sinon = require('sinon');
 
-describe("[ Job Messaging Helper | Messaging Channel ]", function(){
+describe("[ Messaging Helper | Messaging Channel ]", function(){
   // let helper_actions = new MessagingChannel();
   let message_channel;
   let connection_stub, create_channel_stub;
-
-  before(()=>{
-    server.listen(3000);
-  });
 
   describe('A correct call on create_channel', ()=>{
 
@@ -99,10 +92,6 @@ describe("[ Job Messaging Helper | Messaging Channel ]", function(){
       }
     });
 
-  });
-
-  after(()=>{
-    server.close();
   });
 
 });

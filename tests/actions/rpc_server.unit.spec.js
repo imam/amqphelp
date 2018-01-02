@@ -2,19 +2,13 @@
 
 const pathfinder = require(process.env.PWD + '/pathfinder');
 const expect = require('chai').expect;
-const { MessagingAction } = require(pathfinder.to_messaging_helper() + "/action.helper");
-const { MessagingUtil } = require(pathfinder.to_messaging_helper() + "/util.helper");
-const { MessagingChannel } = require(pathfinder.to_messaging_helper() + "/channel.helper");
-
-let server  = require(pathfinder.to_app() + '/index');
-let env  = require(pathfinder.to_env());
+const { MessagingAction } = require(pathfinder.to_app() + "/action.helper");
+const { MessagingUtil } = require(pathfinder.to_app() + "/util.helper");
+const { MessagingChannel } = require(pathfinder.to_app() + "/channel.helper");
 
 const sinon = require('sinon');
 
-describe("[ Job Messaging Helper | RPC Server Action ]", function(){
-  before(()=>{
-    server.listen(3000);
-  });
+describe("[ Messaging Helper | RPC Server Action ]", function(){
 
   describe('a correct call on rpc_server', ()=>{
     const BROKER_USER = process.env.WEB_BROKER_DEFAULT_USER;
@@ -125,7 +119,4 @@ describe("[ Job Messaging Helper | RPC Server Action ]", function(){
 
   });
 
-  after(()=>{
-    server.close();
-  });
 });
