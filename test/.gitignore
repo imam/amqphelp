@@ -1,0 +1,75 @@
+# general
+node_modules/
+dist/
+
+# applications
+applications/npm-debug.log
+
+# for react_lancer
+applications/react_lancer/node_modules
+applications/react_lancer/coverage
+applications/react_lancer/build
+applications/react_lancer/.DS_Store
+applications/react_lancer/.env.local
+applications/react_lancer/.env.development.local
+applications/react_lancer/.env.test.local
+applications/react_lancer/.env.production.local
+applications/react_lancer/npm-debug.log*
+applications/react_lancer/yarn-debug.log*
+applications/react_lancer/yarn-error.log*
+
+# for angular_lancer
+applications/angular_lancer/dist
+applications/angular_lancer/tmp
+applications/angular_lancer/out-tsc
+applications/angular_lancer/node_modules
+applications/angular_lancer/.idea
+applications/angular_lancer/.project
+applications/angular_lancer/.classpath
+applications/angular_lancer/.c9/
+applications/angular_lancer/*.launch
+applications/angular_lancer/.settings/
+applications/angular_lancer/*.sublime-workspace
+applications/angular_lancer/.vscode/*
+!applications/angular_lancer/.vscode/settings.json
+!applications/angular_lancer/.vscode/tasks.json
+!applications/angular_lancer/.vscode/launch.json
+!applications/angular_lancer/.vscode/extensions.json
+applications/angular_lancer/.sass-cache
+applications/angular_lancer/connect.lock
+applications/angular_lancer/coverage
+applications/angular_lancer/libpeerconnection.log
+applications/angular_lancer/npm-debug.log
+applications/angular_lancer/testem.log
+applications/angular_lancer/typings
+applications/angular_lancer/e2e/*.js
+applications/angular_lancer/e2e/*.map
+applications/angular_lancer/.DS_Store
+applications/angular_lancer/Thumbs.db
+
+# for gateway_sample
+gateways/gateway_sample/node_modules
+gateways/gateway_sample/npm-debug.log
+
+# for express_sample
+services/express_sample/node_modules
+services/express_sample/npm-debug.log
+
+# for rails_sample
+services/express_sample/.bundle
+services/express_sample/db/*.sqlite3
+services/express_sample/db/*.sqlite3-journal
+services/express_sample/log/*
+services/express_sample/tmp/*
+!services/express_sample/log/.keep
+!services/express_sample/tmp/.keep
+services/express_sample/.byebug_history
+services/rails_sample/coverage/*
+
+# for automation
+automations/backup/gateway_redis/
+automations/backup/mongo_db/
+automations/environment_files/results/
+automations/backup/Archive.zip
+automations/backup/mongo_db.zip
+.DS_Store
