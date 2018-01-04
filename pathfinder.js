@@ -4,7 +4,7 @@ const path = require('path');
 const _ = require('lodash');
 
 module.exports = (() => {
-  let root_path = process.env.PWD;
+  let root_path = __dirname;
   return {
     to_root: () => {
       return root_path;
