@@ -1,0 +1,13 @@
+{
+  "connection": {
+    "host": "localhost",
+    "options": {
+        "name": "some-rabbit",
+        "cookie": "SWQOKODSQALRPCLNMEQG",
+        "user": "guest",
+        "pass": "guest",
+        "vhost": "/",
+        "reconnect": true
+    }
+  }
+}

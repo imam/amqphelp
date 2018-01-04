@@ -60,7 +60,7 @@ export class MessagingChannel {
         this.retry_time++;
 
         await this.utils.sleep(retry_connection_time, 'Retry broker connection');
-        this.channel = await this.create(broker_user, broker_pass, retry_connection_time, retry_limit);
+        this.channel = await this.create(hostname, broker_user, broker_pass, retry_connection_time, retry_limit);
         return this.channel;
 
       }else{

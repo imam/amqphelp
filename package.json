@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --inspect=localhost:6868 ./index.js --exec \"node -r babel-register\"",
+    "clean": "rimraf dist",
+    "build": "npm run clean && mkdir -p dist && babel app -s -D -d dist",
     "test": "NODE_ENV=test mocha --inspect=localhost:5858 --timeout 15000 --require babel-register ./tests/*.*.spec.js ./tests/*/*.*.spec.js --watch"
   },
   "author": "Antoni <email.to.antoni@gmail.com>",

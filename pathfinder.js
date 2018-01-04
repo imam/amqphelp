@@ -10,10 +10,10 @@ module.exports = (() => {
       return root_path;
     },
     to_app: () => {
-      return `${root_path}/helpers`;
+      return `${root_path}/dist/helpers`;
     },
     to_configs: () => {
-      return `${root_path}/configs`;
+      return `${root_path}/dist/configs`;
     },
     to_tests: () => {
       return `${root_path}/tests`;
