@@ -14,7 +14,7 @@ export class MessagingChannel {
     this.connection;
   }
 
-  async create(broker_user=null, broker_pass=null, retry_connection_time, retry_limit) {
+  async create(hostname=null, broker_user=null, broker_pass=null, retry_connection_time, retry_limit) {
     if ( process.env.NODE_ENV === "test" ) {
       retry_limit = retry_limit || 0;
     }else{
@@ -25,11 +25,15 @@ export class MessagingChannel {
       if (process.env.NODE_ENV !== "test") console.info(`Retry ${this.retry_time} connecting to broker`);
     }
 
+    if (hostname === null){
+      throw new Error("broker host is required!");
+    }
+
     if (broker_user === null || broker_pass === null){
       throw new Error("broker user and password is required!");
     }
 
-    const amqp_path = `amqp://${broker_user}:${broker_pass}@web_broker`;
+    const amqp_path = `amqp://${broker_user}:${broker_pass}@${hostname}`;
 
     let retry_connection = false;
 

@@ -1,9 +1,12 @@
 export class MessagingAction {
 
   // Depedency Injection:
-  constructor({ MessagingChannel, successful_rpc, utils } = {}) {
+  constructor({ settings, utils, MessagingChannel, successful_rpc } = {}) {
     // a service for handling AMQP channel creation
     this.MessagingChannel = MessagingChannel;
+
+    // configuration settings
+    this.settings = settings;
 
     // messaging utilities function helper
     this.utils = utils || null;
@@ -17,9 +20,11 @@ export class MessagingAction {
 
   async ping(ping_message, ping_interval=3000){
     let self = this;
+
     let channel = await this.MessagingChannel.create(
-      process.env.WEB_BROKER_DEFAULT_USER,
-      process.env.WEB_BROKER_DEFAULT_PASS
+      this.settings.connection.host,
+      this.settings.connection.options.user,
+      this.settings.connection.options.pass
     );
 
     let queue_name = `${process.env.npm_package_name}_heartbeat`;
@@ -45,8 +50,9 @@ export class MessagingAction {
 
     let self = this;
     let channel = await this.MessagingChannel.create(
-      process.env.WEB_BROKER_DEFAULT_USER,
-      process.env.WEB_BROKER_DEFAULT_PASS
+      this.settings.connection.host,
+      this.settings.connection.options.user,
+      this.settings.connection.options.pass
     );
 
     await channel.assertQueue(queue_name, {durable: durable});
@@ -64,8 +70,9 @@ export class MessagingAction {
 
     let self = this;
     let channel = await this.MessagingChannel.create(
-      process.env.WEB_BROKER_DEFAULT_USER,
-      process.env.WEB_BROKER_DEFAULT_PASS
+      this.settings.connection.host,
+      this.settings.connection.options.user,
+      this.settings.connection.options.pass
     );
 
     await channel.assertQueue(queue_name, {durable: durable});
@@ -93,8 +100,9 @@ export class MessagingAction {
     let self = this;
 
     let channel = await self.MessagingChannel.create(
-      process.env.WEB_BROKER_DEFAULT_USER,
-      process.env.WEB_BROKER_DEFAULT_PASS
+      this.settings.connection.host,
+      this.settings.connection.options.user,
+      this.settings.connection.options.pass
     );
 
     let q = await channel.assertQueue('', {exclusive: true});
@@ -120,8 +128,9 @@ export class MessagingAction {
 
     let self = this;
     let channel = await this.MessagingChannel.create(
-      process.env.WEB_BROKER_DEFAULT_USER,
-      process.env.WEB_BROKER_DEFAULT_PASS
+      this.settings.connection.host,
+      this.settings.connection.options.user,
+      this.settings.connection.options.pass
     );
 
     await channel.assertQueue(queue_name, {durable: false});
@@ -138,8 +147,9 @@ export class MessagingAction {
   //
   //   let self = this;
   //   let channel = await this.MessagingChannel.create(
-  //     process.env.WEB_BROKER_DEFAULT_USER,
-  //     process.env.WEB_BROKER_DEFAULT_PASS
+  //      this.settings.connection.host,
+  //      this.settings.connection.options.user,
+  //      this.settings.connection.options.pass
   //   );
   //
   //   await channel.assertQueue(queue_name);
@@ -154,8 +164,9 @@ export class MessagingAction {
     let self = this;
 
     let channel = await this.MessagingChannel.create(
-      process.env.WEB_BROKER_DEFAULT_USER,
-      process.env.WEB_BROKER_DEFAULT_PASS
+      this.settings.connection.host,
+      this.settings.connection.options.user,
+      this.settings.connection.options.pass
     );
 
     await channel.assertQueue(queue_name);

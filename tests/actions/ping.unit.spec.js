@@ -11,8 +11,10 @@ const sinon = require('sinon');
 describe("[ Messaging Helper | Ping Action ]", function(){
 
   describe('a correct call on ping', ()=>{
-    const BROKER_USER = process.env.WEB_BROKER_DEFAULT_USER;
-    const BROKER_PASS = process.env.WEB_BROKER_DEFAULT_PASS;
+
+    const BROKER_HOST = 'localhost';
+    const BROKER_USER = 'guest';
+    const BROKER_PASS = 'guest';
 
     let messagingChannel, messagingAction;
 
@@ -27,10 +29,20 @@ describe("[ Messaging Helper | Ping Action ]", function(){
         sendToQueue: () => { return 1 }
       });
 
-      let create_channel_stub = sinon.stub(messagingChannel, "create");
-      create_channel_stub.withArgs(BROKER_USER, BROKER_PASS).returns(channel_stub);
+      let settings = {
+        connection: {
+          host: BROKER_HOST,
+          options: {
+            user: BROKER_USER,
+            pass: BROKER_PASS
+          }
+        }
+      }
 
-      messagingAction = new MessagingAction({ MessagingChannel: messagingChannel });
+      let create_channel_stub = sinon.stub(messagingChannel, "create");
+      create_channel_stub.withArgs(BROKER_HOST, BROKER_USER, BROKER_PASS).returns(channel_stub);
+
+      messagingAction = new MessagingAction({ settings:settings, MessagingChannel: messagingChannel });
 
       clock = sinon.useFakeTimers();
     });

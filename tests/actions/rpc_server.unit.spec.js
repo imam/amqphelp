@@ -11,8 +11,10 @@ const sinon = require('sinon');
 describe("[ Messaging Helper | RPC Server Action ]", function(){
 
   describe('a correct call on rpc_server', ()=>{
-    const BROKER_USER = process.env.WEB_BROKER_DEFAULT_USER;
-    const BROKER_PASS = process.env.WEB_BROKER_DEFAULT_PASS;
+
+    const BROKER_HOST = 'localhost';
+    const BROKER_USER = 'guest';
+    const BROKER_PASS = 'guest';
 
     let messagingChannel, messagingAction;
 
@@ -36,9 +38,19 @@ describe("[ Messaging Helper | RPC Server Action ]", function(){
         consumerCount: 0
       }));
 
+      let settings = {
+        connection: {
+          host: BROKER_HOST,
+          options: {
+            user: BROKER_USER,
+            pass: BROKER_PASS
+          }
+        }
+      }
+
       let create_channel_stub = sinon.stub(messagingChannel, "create");
-      create_channel_stub.withArgs(BROKER_USER, BROKER_PASS).returns(channel_stub);
-      messagingAction = new MessagingAction({ utils, MessagingChannel: messagingChannel });
+      create_channel_stub.withArgs(BROKER_HOST, BROKER_USER, BROKER_PASS).returns(channel_stub);
+      messagingAction = new MessagingAction({ settings, utils, MessagingChannel: messagingChannel });
 
       return_activity_stub = sinon.stub();
     });
@@ -72,8 +84,9 @@ describe("[ Messaging Helper | RPC Server Action ]", function(){
 
   describe('a incorrect call on rpc_server', ()=>{
 
-    const BROKER_USER = process.env.WEB_BROKER_DEFAULT_USER;
-    const BROKER_PASS = process.env.WEB_BROKER_DEFAULT_PASS;
+    const BROKER_HOST = 'localhost';
+    const BROKER_USER = 'guest';
+    const BROKER_PASS = 'guest';
 
     let messagingChannel, messagingAction;
 
@@ -91,10 +104,20 @@ describe("[ Messaging Helper | RPC Server Action ]", function(){
         consume: () => { return 1 }
       });
 
-      let create_channel_stub = sinon.stub(messagingChannel, "create");
-      create_channel_stub.withArgs(BROKER_USER, BROKER_PASS).returns(channel_stub);
+      let settings = {
+        connection: {
+          host: BROKER_HOST,
+          options: {
+            user: BROKER_USER,
+            pass: BROKER_PASS
+          }
+        }
+      }
 
-      messagingAction = new MessagingAction({ utils, MessagingChannel: messagingChannel });
+      let create_channel_stub = sinon.stub(messagingChannel, "create");
+      create_channel_stub.withArgs(BROKER_HOST, BROKER_USER, BROKER_PASS).returns(channel_stub);
+
+      messagingAction = new MessagingAction({ settings, utils, MessagingChannel: messagingChannel });
     });
 
     it('should throw error if no queue name provided', async function(){

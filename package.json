@@ -43,5 +43,20 @@
   "nyc": {
     "include": "app",
     "exclude": "**/*.spec.js"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Moonhint/amqphelp.git"
+  },
+  "keywords": [
+    "messaging",
+    "helper",
+    "implementation",
+    "amqp",
+    "amqplib"
+  ],
+  "bugs": {
+    "url": "https://github.com/Moonhint/amqphelp.git"
+  },
+  "homepage": "https://github.com/Moonhint/amqphelp.git#readme"
 }

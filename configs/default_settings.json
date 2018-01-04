@@ -1,11 +1,11 @@
 {
   "connection": {
-    "host": "127.0.0.1",
+    "host": "localhost",
     "options": {
-        "name": "web_broker",
+        "name": "some-rabbit",
         "cookie": "SWQOKODSQALRPCLNMEQG",
-        "user": "testing",
-        "pass": "testing",
+        "user": "guest",
+        "pass": "guest",
         "vhost": "/",
         "reconnect": true
     }

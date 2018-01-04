@@ -4,7 +4,7 @@
 const pathfinder = require(process.env.PWD + '/pathfinder');
 const expect = require('chai').expect;
 
-const helper = require(pathfinder.to_app());
+const helper = require(pathfinder.to_app())();
 
 describe("[ Messaging Helper | Statuses ]", function(){
 
