@@ -46,6 +46,8 @@ class MessagingChannel {
 
       const amqp_path = `amqp://${broker_user}:${broker_pass}@${hostname}`;
 
+      console.info(amqp_path);
+
       let retry_connection = false;
 
       try {
