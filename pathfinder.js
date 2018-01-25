@@ -5,9 +5,7 @@ const _ = require('lodash');
 
 let env_path = "dist";
 
-if(process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'dev'){
-  env_path = "app"
-}
+//TODO:: Find how to test without using NODE_ENV
 
 module.exports = (() => {
   let root_path = __dirname;
