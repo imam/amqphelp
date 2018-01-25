@@ -42,6 +42,25 @@ export class MessagingAction {
     return interval;
   }
 
+
+  async send(queue_name, queue_message){
+    let self = this;
+
+    let channel = await this.MessagingChannel.create(
+      this.settings.connection.host,
+      this.settings.connection.options.user,
+      this.settings.connection.options.pass
+    );
+
+    await channel.assertQueue(queue_name);
+
+    let the_queue = channel.sendToQueue(queue_name, new Buffer(`${queue_message}`));
+
+    if (process.env.NODE_ENV !== "test") console.log(`[o] Sent '${queue_message}'`);
+
+    return true;
+  }
+
   async create_task(queue_name=null, payload=null, durable=true, persistent=true){
 
     if(queue_name===null || payload===null){
@@ -143,24 +162,30 @@ export class MessagingAction {
 
   }
 
-  // async publish(queue_name, the_obj){
-  //
-  //   let self = this;
-  //   let channel = await this.MessagingChannel.create(
-  //      this.settings.connection.host,
-  //      this.settings.connection.options.user,
-  //      this.settings.connection.options.pass
-  //   );
-  //
-  //   await channel.assertQueue(queue_name);
-  //
-  //   let queue = ch.sendToQueue(queue_name, new Buffer(JSON.stringify(the_obj)));
-  //   console.log(`[to ${queue_name}] Sent ${the_obj}`);
-  //   return queue;
-  // }
+  async receive(queue_name, callback){
+    if(!queue_name || !callback){
+      throw new TypeError()
+    }
+    let self = this;
 
-  async subscribe(queue_name){
+    let channel = await this.MessagingChannel.create(
+      this.settings.connection.host,
+      this.settings.connection.options.user,
+      this.settings.connection.options.pass
+    );
 
+    await channel.assertQueue(queue_name);
+    channel.consume(queue_name, function(msg) {
+      if (msg !== null) {
+        channel.ack(msg);
+        callback();
+      }
+    });
+
+  }
+
+  //DEPRECATED: renamed to receive
+  async subscribe(queue_name, callback){
     let self = this;
 
     let channel = await this.MessagingChannel.create(
@@ -175,6 +200,7 @@ export class MessagingAction {
         console.info(msg.content.toString());
         // events[queue_name](msg.content);
         channel.ack(msg);
+        callback();
       }
     });
 
