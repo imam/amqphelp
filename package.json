@@ -12,7 +12,8 @@
   "author": "Antoni <email.to.antoni@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "amqplib": "^0.5.1"
+    "amqplib": "^0.5.1",
+    "chai-as-promised": "^7.1.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
