@@ -54,6 +54,11 @@ class MessagingAction {
     var _this2 = this;
 
     return _asyncToGenerator(function* () {
+
+      if (queue_name === undefined || queue_message === undefined) {
+        throw new Error('Queue name and queue message is undefined');
+      }
+
       let self = _this2;
 
       let channel = yield _this2.MessagingChannel.create(_this2.settings.connection.host, _this2.settings.connection.options.user, _this2.settings.connection.options.pass);
