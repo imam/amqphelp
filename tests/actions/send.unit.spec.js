@@ -107,7 +107,7 @@ describe("[ Messaging Helper | Send Action ]", function(){
       messagingAction = new MessagingAction({ settings:settings, MessagingChannel: messagingChannel });
     });
 
-    it.only("should throw error if queue_name and queue_message is undefined", async ()=>{
+    it("should throw error if queue_name and queue_message is undefined", async ()=>{
       try{
         await messagingAction.send(undefined, undefined)
         throw new Error('Error should be thrown')
