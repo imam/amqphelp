@@ -44,6 +44,11 @@ export class MessagingAction {
 
 
   async send(queue_name, queue_message){
+
+    if(queue_name === undefined || queue_message === undefined){
+      throw new Error('Queue name and queue message is undefined')
+    }
+
     let self = this;
 
     let channel = await this.MessagingChannel.create(
