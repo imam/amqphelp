@@ -183,10 +183,8 @@ export class MessagingAction {
     channel.consume(queue_name, function(msg) {
       if (msg !== null) {
         channel.ack(msg);
-        callback(msg);
-      } else {
-        callback();
-      }
+        callback(JSON.parse(msg.content.toString()));
+      }    
     });
 
   }
