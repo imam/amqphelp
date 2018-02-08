@@ -14,11 +14,11 @@ describe("[ Pathfinder ]", function(){
   });
 
   it('should return to app path', ()=>{
-    expect(pathfinder.to_app()).to.equal(`${root_path}/dist/helpers`);
+    expect(pathfinder.to_app()).to.equal(`${root_path}/app/helpers`);
   });
 
   it('should return to configs path', ()=>{
-    expect(pathfinder.to_configs()).to.equal(`${root_path}/dist/configs`);
+    expect(pathfinder.to_configs()).to.equal(`${root_path}/app/configs`);
   });
 
   it('should return to tests path', ()=>{
