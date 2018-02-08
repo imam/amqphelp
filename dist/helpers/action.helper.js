@@ -200,6 +200,8 @@ class MessagingAction {
       channel.consume(queue_name, function (msg) {
         if (msg !== null) {
           channel.ack(msg);
+          callback(msg);
+        } else {
           callback();
         }
       });
@@ -221,7 +223,7 @@ class MessagingAction {
           console.info(msg.content.toString());
           // events[queue_name](msg.content);
           channel.ack(msg);
-          callback();
+          callback(msg);
         }
       });
     })();

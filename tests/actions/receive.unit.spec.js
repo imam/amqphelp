@@ -91,9 +91,7 @@ describe("[ Messaging Helper | Create Task Action ]", function(){
       channel_stub = {
         assertQueue() { return Promise.resolve(true) },
         consume: sinon.stub().callsFake((_, callback)=>{
-          callback({
-            content: 'kdsklaj'
-          })
+          callback('success')
         }),
         ack: sinon.stub()
       };
@@ -123,7 +121,7 @@ describe("[ Messaging Helper | Create Task Action ]", function(){
     it("should call callback", async ()=>{
       let callback = sinon.stub()
       await messagingAction.receive(QUEUE_NAME, callback)
-      expect(callback.calledOnce).to.equal(true)
+      expect(callback.withArgs('success').calledOnce).to.equal(true)
     })
 
     afterEach(()=>{
