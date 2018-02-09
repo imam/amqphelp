@@ -7,7 +7,8 @@
     "dev": "nodemon --inspect=localhost:6868 ./index.js --exec \"node -r babel-register\"",
     "clean": "rimraf dist",
     "build": "npm run clean && mkdir -p dist && babel app -s -D -d dist",
-    "test": "NODE_ENV=test USECODE=app mocha --inspect=localhost:5858 --timeout 15000 --require babel-register ./tests/*.*.spec.js ./tests/*/*.*.spec.js --watch"
+    "test": "NODE_ENV=test USECODE=app mocha --inspect=localhost:5858 --timeout 15000 --require babel-register ./tests/*.*.spec.js ./tests/*/*.*.spec.js --watch",
+    "test:once": "NODE_ENV=test USECODE=app mocha --inspect=localhost:5858 --timeout 15000 --require babel-register ./tests/*.*.spec.js ./tests/*/*.*.spec.js",
   },
   "author": "Antoni <email.to.antoni@gmail.com>",
   "license": "ISC",
