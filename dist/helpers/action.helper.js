@@ -55,9 +55,11 @@ class MessagingAction {
 
     await channel.assertQueue(queue_name);
 
-    let the_queue = channel.sendToQueue(queue_name, new Buffer(`${queue_message}`));
+    let output = JSON.stringify(queue_message);
 
-    if (process.env.NODE_ENV !== "test") console.log(`[o] Sent '${queue_message}'`);
+    let the_queue = channel.sendToQueue(queue_name, new Buffer(output));
+
+    if (process.env.NODE_ENV !== "test") console.log(`[o] Sent '${output}'`);
 
     return true;
   }
