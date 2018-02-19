@@ -39,7 +39,10 @@ class MessagingAction {
       yield channel.assertQueue(queue_name);
 
       let interval = setInterval(_asyncToGenerator(function* () {
-        let the_queue = channel.sendToQueue(queue_name, new Buffer(`${ping_message} ${self.ping_count}`));
+
+        let output = JSON.stringify(`${ping_message} ${self.ping_count}`);
+
+        let the_queue = channel.sendToQueue(queue_name, new Buffer(output));
 
         if (process.env.NODE_ENV !== "test") console.log(`[o] Sent '${ping_message} ${self.ping_count}'`);
 
@@ -65,12 +68,11 @@ class MessagingAction {
 
       yield channel.assertQueue(queue_name);
 
+      let output = JSON.stringify(queue_message);
 
-    let output = JSON.stringify(queue_message);
+      let the_queue = channel.sendToQueue(queue_name, new Buffer(output));
 
-    let the_queue = channel.sendToQueue(queue_name, new Buffer(output));
-
-    if (process.env.NODE_ENV !== "test") console.log(`[o] Sent '${output}'`);
+      if (process.env.NODE_ENV !== "test") console.log(`[o] Sent '${output}'`);
 
       return true;
     })();

@@ -32,7 +32,10 @@ export class MessagingAction {
     await channel.assertQueue(queue_name);
 
     let interval = setInterval(async function () {
-      let the_queue = channel.sendToQueue(queue_name, new Buffer(`${ping_message} ${self.ping_count}`));
+
+      let output = JSON.stringify(`${ping_message} ${self.ping_count}`);
+
+      let the_queue = channel.sendToQueue(queue_name, new Buffer(output));
 
       if (process.env.NODE_ENV !== "test") console.log(`[o] Sent '${ping_message} ${self.ping_count}'`);
 
@@ -186,7 +189,7 @@ export class MessagingAction {
       if (msg !== null) {
         channel.ack(msg);
         callback(JSON.parse(msg.content.toString()));
-      }    
+      }
     });
 
   }
