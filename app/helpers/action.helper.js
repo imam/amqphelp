@@ -18,6 +18,11 @@ export class MessagingAction {
     this.stringify_payload;
   }
 
+  /**
+   * async ping - ping heartbeat signal with message and interval defined
+   *
+   * @return {Promise}  promise of javascript interval object, in case of you want to stop the ping programaticaly
+   */
   async ping(ping_message, ping_interval=3000){
     let self = this;
 
@@ -45,7 +50,13 @@ export class MessagingAction {
     return interval;
   }
 
-
+  /**
+   * async send - send simple payload to specify queue,
+   *              used together with async RECEIVE
+   * @param  {String} queue_name      queue name
+   * @param  {Any} queue_message      the payload
+   * @return {Promise}                promise of true
+   */
   async send(queue_name, queue_message){
 
     if(queue_name === undefined || queue_message === undefined){
@@ -71,6 +82,45 @@ export class MessagingAction {
     return true;
   }
 
+  /**
+   * async receive - receive simple payload from the queue,
+   *                 used together with async SEND
+   * @param  {String} queue_name    queue name
+   * @param  {Function} callback    callback function with params(payload)
+   */
+  async receive(queue_name, callback){
+    if(!queue_name || !callback){
+      throw new TypeError()
+    }
+    let self = this;
+
+    let channel = await this.MessagingChannel.create(
+      this.settings.connection.host,
+      this.settings.connection.options.user,
+      this.settings.connection.options.pass
+    );
+
+    await channel.assertQueue(queue_name);
+    channel.consume(queue_name, function(msg) {
+      if (msg !== null) {
+        channel.ack(msg);
+        callback(JSON.parse(msg.content.toString()));
+      }
+    });
+
+  }
+
+  /**
+   * async create_task - request some task to be done, not waiting for the result,
+   *                     but will try to recover task if worker failed to process the work,
+   *                     used to together with create_task
+   *
+   * @param  {type} queue_name=null description
+   * @param  {type} payload=null    description
+   * @param  {type} durable=true    description
+   * @param  {type} persistent=true description
+   * @return {type}                 description
+   */
   async create_task(queue_name=null, payload=null, durable=true, persistent=true){
 
     if(queue_name===null || payload===null){
@@ -91,6 +141,15 @@ export class MessagingAction {
     let the_queue = channel.sendToQueue(queue_name, new Buffer(this.stringify_payload), {persistent: persistent});
   }
 
+  /**  
+   * async queue_worker - setup service worker for processing some task,
+   *                      used to together with create_task
+   *
+   * @param  {type} queue_name=null description
+   * @param  {type} prefetch=3      description
+   * @param  {type} durable=true    description
+   * @return {type}                 description
+   */
   async queue_worker(queue_name=null, prefetch=3, durable=true){
 
     if(queue_name===null){
@@ -116,6 +175,16 @@ export class MessagingAction {
     }, {noAck: false});
   }
 
+
+  /**
+   * async rpc_client - request some task to be done from rpc_server and wait for the result,
+   *                    used together with rpc_server
+   *
+   * @param  {String} queue_name=null           description
+   * @param  {Any} payload=null                 description
+   * @param  {String} correlationId=null        description
+   * @param  {Function} response_activity=null  description
+   */
   async rpc_client(queue_name=null, payload=null, correlationId=null, response_activity=null){
 
     if(queue_name===null || payload===null){
@@ -150,6 +219,15 @@ export class MessagingAction {
 
   }
 
+  /**
+   * async rpc_server - setup service service server for processing some task then give response immediately after finished,
+   *                    used together with rpc_client
+   *
+   * @param  {type} queue_name=null description
+   * @param  {type} activity=null   description
+   * @param  {type} prefetch=3      description
+   * @return {type}                 description
+   */
   async rpc_server(queue_name=null, activity=null, prefetch=3){
     if(queue_name===null || activity===null){
       throw new Error('Queue name and activity is required, as the first and second params');
@@ -168,28 +246,6 @@ export class MessagingAction {
 
     channel.consume(queue_name, async function reply(msg) {
       await activity(msg, channel);
-    });
-
-  }
-
-  async receive(queue_name, callback){
-    if(!queue_name || !callback){
-      throw new TypeError()
-    }
-    let self = this;
-
-    let channel = await this.MessagingChannel.create(
-      this.settings.connection.host,
-      this.settings.connection.options.user,
-      this.settings.connection.options.pass
-    );
-
-    await channel.assertQueue(queue_name);
-    channel.consume(queue_name, function(msg) {
-      if (msg !== null) {
-        channel.ack(msg);
-        callback(JSON.parse(msg.content.toString()));
-      }
     });
 
   }
