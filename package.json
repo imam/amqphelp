@@ -1,6 +1,6 @@
 {
   "name": "amqphelp",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "helper for amqp",
   "main": "index.js",
   "scripts": {
