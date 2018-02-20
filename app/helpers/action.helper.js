@@ -1,3 +1,4 @@
+//TODO:: Add deeper unit test on subscribe, publish and ping
 export class MessagingAction {
 
   // Depedency Injection:
@@ -16,38 +17,6 @@ export class MessagingAction {
     this.retry_rpc = 0;
     this.successful_rpc = successful_rpc || false;
     this.stringify_payload;
-  }
-
-  /**
-   * async ping - ping heartbeat signal with message and interval defined
-   *
-   * @return {Promise}  promise of javascript interval object, in case of you want to stop the ping programaticaly
-   */
-  async ping(ping_message, ping_interval=3000){
-    let self = this;
-
-    let channel = await this.MessagingChannel.create(
-      this.settings.connection.host,
-      this.settings.connection.options.user,
-      this.settings.connection.options.pass
-    );
-
-    let queue_name = `${process.env.npm_package_name}_heartbeat`;
-
-    await channel.assertQueue(queue_name);
-
-    let interval = setInterval(async function () {
-
-      let output = JSON.stringify(`${ping_message} ${self.ping_count}`);
-
-      let the_queue = channel.sendToQueue(queue_name, new Buffer(output));
-
-      if (process.env.NODE_ENV !== "test") console.log(`[o] Sent '${ping_message} ${self.ping_count}'`);
-
-      self.ping_count++;
-    }, ping_interval);
-
-    return interval;
   }
 
   /**
@@ -89,9 +58,11 @@ export class MessagingAction {
    * @param  {Function} callback    callback function with params(payload)
    */
   async receive(queue_name, callback){
+
     if(!queue_name || !callback){
       throw new TypeError()
     }
+
     let self = this;
 
     let channel = await this.MessagingChannel.create(
@@ -250,8 +221,7 @@ export class MessagingAction {
 
   }
 
-  //DEPRECATED: renamed to receive
-  async subscribe(queue_name, callback){
+  async publish(exchange_name, exchange_message){
     let self = this;
 
     let channel = await this.MessagingChannel.create(
@@ -260,16 +230,51 @@ export class MessagingAction {
       this.settings.connection.options.pass
     );
 
-    await channel.assertQueue(queue_name);
-    channel.consume(queue_name, function(msg) {
-      if (msg !== null) {
-        console.info(msg.content.toString());
-        // events[queue_name](msg.content);
-        channel.ack(msg);
-        callback(msg);
-      }
-    });
+    channel.assertExchange(exchange_name, 'fanout', {durable: false});
 
+    let output = JSON.stringify(exchange_message);
+
+    channel.publish(exchange_name, '', new Buffer(output));
+
+    console.log(`[o] sent '${exchange_message}'`)
+
+    return true;
+  }
+
+  async subscribe(exchange_name, callback){
+    let self = this;
+
+    let channel = await this.MessagingChannel.create(
+      this.settings.connection.host,
+      this.settings.connection.options.user,
+      this.settings.connection.options.pass
+    );
+
+    channel.assertExchange(exchange_name, 'fanout', {durable: false}) 
+
+    let queue_name = await channel.assertQueue('', {exclusive: true})
+
+    await channel.bindQueue(queue_name.queue, exchange_name, '')
+
+    channel.consume(queue_name.queue, msg=>{
+      callback(JSON.parse(msg.content.toString()))
+    }, {noAck: true})
+  }
+
+  async ping(ping_interval = 3000){
+    let self = this;
+
+    let queue_name = `${process.env.npm_package_name}_heartbeat`
+
+    let interval = await setInterval(async ()=>{
+
+      self.ping_count++;
+
+      await this.publish(`${process.env.npm_package_name}_heartbeat`, 'beat')
+
+    }, ping_interval)
+
+    return interval;
   }
 
 };

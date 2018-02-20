@@ -2,8 +2,28 @@
 
 const pathfinder = require('./pathfinder');
 const path_to_default_setttings = `${pathfinder.to_configs()}/default_settings.json`;
+const result = require('dotenv').config();
+const _ = require('lodash')
 
 let default_settings = require(`${path_to_default_setttings}`);
+
+if(result.parsed){
+	let convert = {
+		WEB_BROKER_NAME: "name",
+		WEB_BROKER_COOKIE: "cookie",
+		WEB_BROKER_DEFAULT_USER: "user",
+		WEB_BROKER_DEFAULT_PASS: "pass",
+		WEB_BROKER_DEFAULT_VHOST: "vhost"
+	}
+
+	let convert_result = {};
+
+	_.each(convert, (value, key)=>{
+		convert_result[value] = result.parsed[key]
+	})
+
+	default_settings.connection.options = _.merge(default_settings.connection.options, convert_result)
+}
 
 module.exports = (overwrite_settings=null) => {
   let amqphelp_client;

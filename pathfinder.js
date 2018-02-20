@@ -9,7 +9,6 @@ if(process.env.NODE_ENV === 'test' && process.env.npm_package_name === 'amqphelp
   env_path = "app";
 }
 
-
 //TODO:: Find how to test without using NODE_ENV
 
 module.exports = (() => {
