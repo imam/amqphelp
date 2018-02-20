@@ -47,8 +47,9 @@ describe("[ Messaging Helper | Ping Action ]", function(){
       clock = sinon.useFakeTimers();
     });
 
+    //TODO:: Unit test bug
     it('should increase ping count', async ()=>{
-      interval = await messagingAction.ping("ping testing");
+      interval = await messagingAction.ping();
       clock.tick(6000);
       expect(messagingAction.ping_count).to.equal(2);
     });
