@@ -236,7 +236,7 @@ export class MessagingAction {
 
     channel.publish(exchange_name, '', new Buffer(output));
 
-    console.log(`[o] sent '${exchange_message}'`)
+    console.log(`[o] sent '${output}'`)
 
     return true;
   }
