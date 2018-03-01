@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../app/helpers/model.helper.js"],"names":["model","attacher_type","attacher"],"mappings":";;;;;QAAgBA,K,GAAAA,K;AAAT,SAASA,KAAT,CAAeC,aAAf,EAA6BC,QAA7B,EAAsC,CAE5C","file":"model.helper.js","sourcesContent":["export function model(attacher_type,attacher){\r\n\r\n}"]}
