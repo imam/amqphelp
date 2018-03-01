@@ -1,16 +1,10 @@
-import statuses               from './statuses.helper';
-import { MessagingChannel }   from './channel.helper';
-import { MessagingAction }    from './action.helper';
-import { MessagingUtil }      from './util.helper';
+import Amqp from './base';
+import MongoDBAttacher from '../../attachers/mongodb.js'
 
 module.exports = (settings) => {
+  const amqp = new Amqp({settings})
 
-  let utils = new MessagingUtil();
-  let messagingChannel = new MessagingChannel({ utils });
+  amqp.registerAttacher('mongo', new MongoDBAttacher)
 
-  return {
-    utils,
-    statuses,
-    actions: new MessagingAction({ settings, utils, MessagingChannel: messagingChannel })
-  };
+  return amqp
 };

@@ -25,6 +25,9 @@ module.exports = (() => {
     },
     to_tests: () => {
       return `${root_path}/tests`;
+    },
+    to_attachers: () => {
+      return `${root_path}/attachers`;
     }
   };
 })();
