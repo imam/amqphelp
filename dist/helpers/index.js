@@ -4,7 +4,7 @@ var _base = require('./base');
 
 var _base2 = _interopRequireDefault(_base);
 
-var _mongodb = require('../../attachers/mongodb.js');
+var _mongodb = require('../attachers/mongodb.js');
 
 var _mongodb2 = _interopRequireDefault(_mongodb);
 
