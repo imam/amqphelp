@@ -26,7 +26,7 @@ describe("[ Pathfinder ]", function(){
   });
 
   it('should return to attachers path', ()=>{
-    expect(pathfinder.to_attachers()).to.equal(`${root_path}/attachers`);
+    expect(pathfinder.to_attachers()).to.equal(`${root_path}/app/attachers`);
   })
 
 });
