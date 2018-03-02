@@ -3,6 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 //TODO:: Add deeper unit test on subscribe, publish and ping
 class MessagingAction {
 
@@ -31,25 +34,29 @@ class MessagingAction {
      * @param  {Any} queue_message      the payload
      * @return {Promise}                promise of true
      */
-    async send(queue_name, queue_message) {
+    send(queue_name, queue_message) {
+        var _this = this;
 
-        if (queue_name === undefined || queue_message === undefined) {
-            throw new Error('Queue name and queue message is undefined');
-        }
+        return _asyncToGenerator(function* () {
 
-        let self = this;
+            if (queue_name === undefined || queue_message === undefined) {
+                throw new Error('Queue name and queue message is undefined');
+            }
 
-        let channel = await this.MessagingChannel.create(this.settings.connection.host, this.settings.connection.options.user, this.settings.connection.options.pass);
+            let self = _this;
 
-        await channel.assertQueue(queue_name);
+            let channel = yield _this.MessagingChannel.create(_this.settings.connection.host, _this.settings.connection.options.user, _this.settings.connection.options.pass);
 
-        let output = JSON.stringify(queue_message);
+            yield channel.assertQueue(queue_name);
 
-        let the_queue = channel.sendToQueue(queue_name, new Buffer(output));
+            let output = JSON.stringify(queue_message);
 
-        if (process.env.NODE_ENV !== "test") console.log(`[o] Sent '${output}'`);
+            let the_queue = channel.sendToQueue(queue_name, new Buffer(output));
 
-        return true;
+            if (process.env.NODE_ENV !== "test") console.log(`[o] Sent '${output}'`);
+
+            return true;
+        })();
     }
 
     /**
@@ -58,23 +65,27 @@ class MessagingAction {
      * @param  {String} queue_name    queue name
      * @param  {Function} callback    callback function with params(payload)
      */
-    async receive(queue_name, callback) {
+    receive(queue_name, callback) {
+        var _this2 = this;
 
-        if (!queue_name || !callback) {
-            throw new TypeError();
-        }
+        return _asyncToGenerator(function* () {
 
-        let self = this;
-
-        let channel = await this.MessagingChannel.create(this.settings.connection.host, this.settings.connection.options.user, this.settings.connection.options.pass);
-
-        await channel.assertQueue(queue_name);
-        channel.consume(queue_name, function (msg) {
-            if (msg !== null) {
-                channel.ack(msg);
-                callback(JSON.parse(msg.content.toString()));
+            if (!queue_name || !callback) {
+                throw new TypeError();
             }
-        });
+
+            let self = _this2;
+
+            let channel = yield _this2.MessagingChannel.create(_this2.settings.connection.host, _this2.settings.connection.options.user, _this2.settings.connection.options.pass);
+
+            yield channel.assertQueue(queue_name);
+            channel.consume(queue_name, function (msg) {
+                if (msg !== null) {
+                    channel.ack(msg);
+                    callback(JSON.parse(msg.content.toString()));
+                }
+            });
+        })();
     }
 
     /**
@@ -88,20 +99,24 @@ class MessagingAction {
      * @param  {type} persistent=true description
      * @return {type}                 description
      */
-    async create_task(queue_name = null, payload = null, durable = true, persistent = true) {
+    create_task(queue_name = null, payload = null, durable = true, persistent = true) {
+        var _this3 = this;
 
-        if (queue_name === null || payload === null) {
-            throw new Error('Queue name and payload is required, as first and second params');
-        }
+        return _asyncToGenerator(function* () {
 
-        let self = this;
-        let channel = await this.MessagingChannel.create(this.settings.connection.host, this.settings.connection.options.user, this.settings.connection.options.pass);
+            if (queue_name === null || payload === null) {
+                throw new Error('Queue name and payload is required, as first and second params');
+            }
 
-        await channel.assertQueue(queue_name, { durable: durable });
+            let self = _this3;
+            let channel = yield _this3.MessagingChannel.create(_this3.settings.connection.host, _this3.settings.connection.options.user, _this3.settings.connection.options.pass);
 
-        this.stringify_payload = JSON.stringify(payload);
+            yield channel.assertQueue(queue_name, { durable: durable });
 
-        let the_queue = channel.sendToQueue(queue_name, new Buffer(this.stringify_payload), { persistent: persistent });
+            _this3.stringify_payload = JSON.stringify(payload);
+
+            let the_queue = channel.sendToQueue(queue_name, new Buffer(_this3.stringify_payload), { persistent: persistent });
+        })();
     }
 
     /**  
@@ -113,25 +128,29 @@ class MessagingAction {
      * @param  {type} durable=true    description
      * @return {type}                 description
      */
-    async queue_worker(queue_name = null, prefetch = 3, durable = true) {
+    queue_worker(queue_name = null, prefetch = 3, durable = true) {
+        var _this4 = this;
 
-        if (queue_name === null) {
-            throw new Error('Queue name is required, as the first params');
-        }
+        return _asyncToGenerator(function* () {
 
-        let self = this;
-        let channel = await this.MessagingChannel.create(this.settings.connection.host, this.settings.connection.options.user, this.settings.connection.options.pass);
-
-        await channel.assertQueue(queue_name, { durable: durable });
-
-        channel.prefetch(prefetch);
-
-        channel.consume(queue_name, function (msg) {
-            if (msg !== null) {
-                // events[queue_name](msg.content);
-                ch.ack(msg);
+            if (queue_name === null) {
+                throw new Error('Queue name is required, as the first params');
             }
-        }, { noAck: false });
+
+            let self = _this4;
+            let channel = yield _this4.MessagingChannel.create(_this4.settings.connection.host, _this4.settings.connection.options.user, _this4.settings.connection.options.pass);
+
+            yield channel.assertQueue(queue_name, { durable: durable });
+
+            channel.prefetch(prefetch);
+
+            channel.consume(queue_name, function (msg) {
+                if (msg !== null) {
+                    // events[queue_name](msg.content);
+                    ch.ack(msg);
+                }
+            }, { noAck: false });
+        })();
     }
 
     /**
@@ -143,32 +162,42 @@ class MessagingAction {
      * @param  {String} correlationId=null        description
      * @param  {Function} response_activity=null  description
      */
-    async rpc_client(queue_name = null, payload = null, correlationId = null, response_activity = null) {
+    rpc_client(queue_name = null, payload = null, correlationId = null, response_activity = null) {
+        var _this5 = this;
 
-        if (queue_name === null || payload === null) {
-            throw new Error('Queue name and payload is required, as first and second params');
-        }
+        return _asyncToGenerator(function* () {
 
-        if (correlationId === null || response_activity === null) {
-            throw new Error('correlationId and response_activity is required, as third and fourth params');
-        }
-
-        let self = this;
-
-        let channel = await self.MessagingChannel.create(this.settings.connection.host, this.settings.connection.options.user, this.settings.connection.options.pass);
-
-        let q = await channel.assertQueue('', { exclusive: true });
-
-        channel.consume(q.queue, async function (msg) {
-            if (msg.properties.correlationId === correlationId) {
-                await response_activity(msg, channel);
-                self.successful_rpc = true;
+            if (queue_name === null || payload === null) {
+                throw new Error('Queue name and payload is required, as first and second params');
             }
-        }, { noAck: true });
 
-        self.stringify_payload = JSON.stringify(payload);
+            if (correlationId === null || response_activity === null) {
+                throw new Error('correlationId and response_activity is required, as third and fourth params');
+            }
 
-        let the_queue = channel.sendToQueue(queue_name, new Buffer(self.stringify_payload), { correlationId: correlationId, replyTo: q.queue });
+            let self = _this5;
+
+            let channel = yield self.MessagingChannel.create(_this5.settings.connection.host, _this5.settings.connection.options.user, _this5.settings.connection.options.pass);
+
+            let q = yield channel.assertQueue('', { exclusive: true });
+
+            channel.consume(q.queue, (() => {
+                var _ref = _asyncToGenerator(function* (msg) {
+                    if (msg.properties.correlationId === correlationId) {
+                        yield response_activity(msg, channel);
+                        self.successful_rpc = true;
+                    }
+                });
+
+                return function (_x) {
+                    return _ref.apply(this, arguments);
+                };
+            })(), { noAck: true });
+
+            self.stringify_payload = JSON.stringify(payload);
+
+            let the_queue = channel.sendToQueue(queue_name, new Buffer(self.stringify_payload), { correlationId: correlationId, replyTo: q.queue });
+        })();
     }
 
     /**
@@ -180,68 +209,92 @@ class MessagingAction {
      * @param  {type} prefetch=3      description
      * @return {type}                 description
      */
-    async rpc_server(queue_name = null, activity = null, prefetch = 3) {
-        if (queue_name === null || activity === null) {
-            throw new Error('Queue name and activity is required, as the first and second params');
-        }
+    rpc_server(queue_name = null, activity = null, prefetch = 3) {
+        var _this6 = this;
 
-        let self = this;
-        let channel = await this.MessagingChannel.create(this.settings.connection.host, this.settings.connection.options.user, this.settings.connection.options.pass);
+        return _asyncToGenerator(function* () {
+            if (queue_name === null || activity === null) {
+                throw new Error('Queue name and activity is required, as the first and second params');
+            }
 
-        await channel.assertQueue(queue_name, { durable: false });
+            let self = _this6;
+            let channel = yield _this6.MessagingChannel.create(_this6.settings.connection.host, _this6.settings.connection.options.user, _this6.settings.connection.options.pass);
 
-        channel.prefetch(prefetch);
+            yield channel.assertQueue(queue_name, { durable: false });
 
-        channel.consume(queue_name, async function reply(msg) {
-            await activity(msg, channel);
-        });
+            channel.prefetch(prefetch);
+
+            channel.consume(queue_name, (() => {
+                var _ref2 = _asyncToGenerator(function* (msg) {
+                    yield activity(msg, channel);
+                });
+
+                function reply(_x2) {
+                    return _ref2.apply(this, arguments);
+                }
+
+                return reply;
+            })());
+        })();
     }
 
-    async publish(exchange_name, exchange_message) {
-        let self = this;
+    publish(exchange_name, exchange_message) {
+        var _this7 = this;
 
-        let channel = await this.MessagingChannel.create(this.settings.connection.host, this.settings.connection.options.user, this.settings.connection.options.pass);
+        return _asyncToGenerator(function* () {
+            let self = _this7;
 
-        channel.assertExchange(exchange_name, 'fanout', { durable: false });
+            let channel = yield _this7.MessagingChannel.create(_this7.settings.connection.host, _this7.settings.connection.options.user, _this7.settings.connection.options.pass);
 
-        let output = JSON.stringify(exchange_message);
+            channel.assertExchange(exchange_name, 'fanout', { durable: false });
 
-        channel.publish(exchange_name, '', new Buffer(output));
+            let output = JSON.stringify(exchange_message);
 
-        console.log(`[o] sent '${output}'`);
+            channel.publish(exchange_name, '', new Buffer(output));
 
-        return true;
+            console.log(`[o] sent '${output}'`);
+
+            return true;
+        })();
     }
 
-    async subscribe(exchange_name, callback) {
-        let self = this;
+    subscribe(exchange_name, callback) {
+        var _this8 = this;
 
-        let channel = await this.MessagingChannel.create(this.settings.connection.host, this.settings.connection.options.user, this.settings.connection.options.pass);
+        return _asyncToGenerator(function* () {
+            let self = _this8;
 
-        channel.assertExchange(exchange_name, 'fanout', { durable: false });
+            let channel = yield _this8.MessagingChannel.create(_this8.settings.connection.host, _this8.settings.connection.options.user, _this8.settings.connection.options.pass);
 
-        let queue_name = await channel.assertQueue('', { exclusive: true });
+            channel.assertExchange(exchange_name, 'fanout', { durable: false });
 
-        await channel.bindQueue(queue_name.queue, exchange_name, '');
+            let queue_name = yield channel.assertQueue('', { exclusive: true });
 
-        channel.consume(queue_name.queue, msg => {
-            callback(JSON.parse(msg.content.toString()));
-        }, { noAck: true });
+            yield channel.bindQueue(queue_name.queue, exchange_name, '');
+
+            channel.consume(queue_name.queue, function (msg) {
+                callback(JSON.parse(msg.content.toString()));
+            }, { noAck: true });
+        })();
     }
 
-    async ping(ping_interval = 3000) {
-        let self = this;
+    ping(ping_interval = 3000) {
+        var _this9 = this;
 
-        let queue_name = `${process.env.npm_package_name}_heartbeat`;
+        return _asyncToGenerator(function* () {
+            let self = _this9;
 
-        let interval = await setInterval(async () => {
+            let queue_name = `${process.env.npm_package_name}_heartbeat`;
 
-            self.ping_count++;
+            let interval = yield setInterval(_asyncToGenerator(function* () {
 
-            await this.publish(`${process.env.npm_package_name}_heartbeat`, 'beat');
-        }, ping_interval);
+                self.ping_count++;
 
-        return interval;
+                yield _this9.publish(`${process.env.npm_package_name}_heartbeat`, 'beat');
+            }), ping_interval);
+
+            return interval;
+        })();
     }
 
 }exports.MessagingAction = MessagingAction;

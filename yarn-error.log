@@ -1,22 +1,22 @@
 Arguments: 
-  /home/ubuntu/.nvm/versions/node/v6.10.1/bin/node /usr/share/yarn/bin/yarn.js add -D mongoose
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js run build
 
 PATH: 
-  /home/ubuntu/.nvm/versions/node/v6.10.1/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+  C:\Users\Dell\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Dell\bin;C:\Program Files\ImageMagick-7.0.7-Q16;C:\Program Files\ImageMagick-7.0.7-Q8;C:\ProgramData\Oracle\Java\javapath;C:\Program Files\Docker\Docker\Resources\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\xampp\php;C:\ProgramData\ComposerSetup\bin;C:\Program Files\Amazon\AWSCLI;C:\Program Files\OpenSSH\bin;C:\ProgramData\chocolatey\bin;C:\tools\sqlite;C:\Program Files (x86)\Heroku\bin;C:\Program Files (x86)\git\cmd;C:\PostgreSQL\pg96\bin;C:\Program Files (x86)\OpenVPN\bin;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn;C:\Program Files (x86)\Microsoft SQL Server\130\Tools\Binn;C:\Program Files\Microsoft SQL Server\130\Tools\Binn;C:\Program Files\Microsoft SQL Server\130\DTS\Binn;C:\Program Files\CMake\bin;C:\Program Files\nodejs;C:\HashiCorp\Vagrant\bin;C:\Program Files\Git\cmd;C:\Program Files\PuTTY;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit;C:\Program Files (x86)\Yarn\bin;C:\Ruby23-x64\bin;C:\Users\Dell\AppData\Local\Microsoft\WindowsApps;C:\Users\Dell\AppData\Roaming\Composer\vendor\bin;C:\Python27;C:\Python27\Scripts;C:\Users\Dell\AppData\Roaming\Python\Scripts;C:\PROGRA~2\Oracle\VirtualBox;C:\Users\Dell\AppData\Local\atom\bin;C:\Program Files\PostgreSQL\9.3\bin;C:\Users\Dell\Homestead\bin;C:\Program Files\Heroku\bin;C:\Program Files\Java\jdk1.8.0_144\bin;C:\Users\Dell\AppData\Local\Turbo\Cmd;D:\Program Files\MongoDB\Server\3.6\bin;C:\msys32\usr\bin;C:\msys32\usr\local\bin;C:\Users\Dell\AppData\Roaming\npm;D:\Qt\Qt5.5.1\5.5\mingw492_32\bin;D:\Program Files\Microsoft VS Code\bin;C:\Users\Dell\AppData\Local\Yarn\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
 
 Yarn version: 
-  1.3.2
+  1.5.1
 
 Node version: 
-  6.10.1
+  8.9.4
 
 Platform: 
-  linux x64
+  win32 x64
 
 npm manifest: 
   {
     "name": "amqphelp",
-    "version": "1.0.17",
+    "version": "1.0.19",
     "description": "helper for amqp",
     "main": "index.js",
     "scripts": {
@@ -25,27 +25,26 @@ npm manifest:
       "build": "npm run clean && mkdir -p dist && babel app -s -D -d dist",
       "test": "NODE_ENV=test USECODE=app mocha --inspect=localhost:5858 --timeout 15000 --require babel-register ./tests/*.*.spec.js ./tests/*/*.*.spec.js --watch",
       "test:once": "NODE_ENV=test USECODE=app mocha --inspect=localhost:5858 --timeout 15000 --require babel-register ./tests/*.*.spec.js ./tests/*/*.*.spec.js",
-      "simulate": "NODE_ENV=test nodemon --watch . -L --exec \"node -r babel-register\""
+      "simulate": "npm run build && NODE_ENV=test nodemon --watch . -L --exec \"node -r babel-register\""
     },
     "author": "Antoni <email.to.antoni@gmail.com>",
     "license": "ISC",
     "dependencies": {
       "amqplib": "^0.5.1",
-      "chai-as-promised": "^7.1.1",
-      "lodash": "^4.17.5"
+      "chai-as-promised": "^7.1.1"
     },
     "devDependencies": {
       "babel-cli": "^6.26.0",
       "babel-plugin-transform-object-rest-spread": "^6.26.0",
       "babel-preset-env": "^1.6.0",
+      "nodemon": "^1.11.0",
+      "mocha": "^3.5.3",
       "chai": "^3.5.0",
+      "sinon": "^4.1.2",
       "dotenv": "^4.0.0",
       "istanbul": "^0.4.5",
-      "mocha": "^3.5.3",
-      "nodemon": "^1.11.0",
       "nyc": "^11.3.0",
-      "rimraf": "^2.6.2",
-      "sinon": "^4.1.2"
+      "rimraf": "^2.6.2"
     },
     "babel": {
       "presets": [
@@ -913,8 +912,8 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-4.1.0.tgz#d545635be1e33c542649c69173e5de6acfae34dd"
   
   caniuse-lite@^1.0.30000792:
-    version "1.0.30000809"
-    resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000809.tgz#1e12c1344b8f74d56737ee2614bcedb648943479"
+    version "1.0.30000810"
+    resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000810.tgz#47585fffce0e9f3593a6feea4673b945424351d9"
   
   capture-stack-trace@^1.0.0:
     version "1.0.0"
@@ -1270,8 +1269,8 @@ Lockfile:
       jsbn "~0.1.0"
   
   electron-to-chromium@^1.3.30:
-    version "1.3.33"
-    resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.33.tgz#bf00703d62a7c65238136578c352d6c5c042a545"
+    version "1.3.34"
+    resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.34.tgz#d93498f40391bb0c16a603d8241b9951404157ed"
   
   error-ex@^1.2.0:
     version "1.3.1"
@@ -1772,8 +1771,8 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/ini/-/ini-1.3.5.tgz#eee25f56db1c9ec6085e0c22778083f596abf927"
   
   invariant@^2.2.2:
-    version "2.2.2"
-    resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.2.tgz#9e1f56ac0acdb6bf303306f338be3b204ae60360"
+    version "2.2.3"
+    resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.3.tgz#1a827dfde7dcbd7c323f0ca826be8fa7c5e9d688"
     dependencies:
       loose-envify "^1.0.0"
   
@@ -2235,10 +2234,6 @@ Lockfile:
       lodash._basecreate "^3.0.0"
       lodash._isiterateecall "^3.0.0"
   
-  lodash.endswith@^4.2.1:
-    version "4.2.1"
-    resolved "https://registry.yarnpkg.com/lodash.endswith/-/lodash.endswith-4.2.1.tgz#fed59ac1738ed3e236edd7064ec456448b37bc09"
-  
   lodash.get@^4.4.2:
     version "4.4.2"
     resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
@@ -2251,14 +2246,6 @@ Lockfile:
     version "3.0.4"
     resolved "https://registry.yarnpkg.com/lodash.isarray/-/lodash.isarray-3.0.4.tgz#79e4eb88c36a8122af86f844aa9bcd851b5fbb55"
   
-  lodash.isfunction@^3.0.8:
-    version "3.0.9"
-    resolved "https://registry.yarnpkg.com/lodash.isfunction/-/lodash.isfunction-3.0.9.tgz#06de25df4db327ac931981d1bdb067e5af68d051"
-  
-  lodash.isstring@^4.0.1:
-    version "4.0.1"
-    resolved "https://registry.yarnpkg.com/lodash.isstring/-/lodash.isstring-4.0.1.tgz#d527dfb5456eca7cc9bb95d5daeaf88ba54a5451"
-  
   lodash.keys@^3.0.0:
     version "3.1.2"
     resolved "https://registry.yarnpkg.com/lodash.keys/-/lodash.keys-3.1.2.tgz#4dbc0472b156be50a0b286855d1bd0b0c656098a"
@@ -2267,11 +2254,7 @@ Lockfile:
       lodash.isarguments "^3.0.0"
       lodash.isarray "^3.0.0"
   
-  lodash.startswith@^4.2.1:
-    version "4.2.1"
-    resolved "https://registry.yarnpkg.com/lodash.startswith/-/lodash.startswith-4.2.1.tgz#c598c4adce188a27e53145731cdc6c0e7177600c"
-  
-  lodash@^4.17.4, lodash@^4.17.5:
+  lodash@^4.17.4:
     version "4.17.5"
     resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
   
@@ -2301,8 +2284,8 @@ Lockfile:
       yallist "^2.1.2"
   
   make-dir@^1.0.0:
-    version "1.1.0"
-    resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-1.1.0.tgz#19b4369fe48c116f53c2af95ad102c0e39e85d51"
+    version "1.2.0"
+    resolved "https://registry.yarnpkg.com/make-dir/-/make-dir-1.2.0.tgz#6d6a49eead4aae296c53bbf3a1a008bd6c89469b"
     dependencies:
       pify "^3.0.0"
   
@@ -2361,8 +2344,8 @@ Lockfile:
       regex-cache "^0.4.2"
   
   micromatch@^3.1.4:
-    version "3.1.6"
-    resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-3.1.6.tgz#8d7c043b48156f408ca07a4715182b79b99420bf"
+    version "3.1.9"
+    resolved "https://registry.yarnpkg.com/micromatch/-/micromatch-3.1.9.tgz#15dc93175ae39e52e93087847096effc73efcf89"
     dependencies:
       arr-diff "^4.0.0"
       array-unique "^0.3.2"
@@ -2445,8 +2428,8 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
   
   nan@^2.3.0:
-    version "2.8.0"
-    resolved "https://registry.yarnpkg.com/nan/-/nan-2.8.0.tgz#ed715f3fe9de02b57a5e6252d90a96675e1f085a"
+    version "2.9.2"
+    resolved "https://registry.yarnpkg.com/nan/-/nan-2.9.2.tgz#f564d75f5f8f36a6d9456cca7a6c4fe488ab7866"
   
   nanomatch@^1.2.9:
     version "1.2.9"
@@ -2466,8 +2449,8 @@ Lockfile:
       to-regex "^3.0.1"
   
   nise@^1.2.0:
-    version "1.2.5"
-    resolved "https://registry.yarnpkg.com/nise/-/nise-1.2.5.tgz#a143371b65014b6807d3a6e6b4556063f3a53363"
+    version "1.3.0"
+    resolved "https://registry.yarnpkg.com/nise/-/nise-1.3.0.tgz#7d6d506e64a0e37959495157f30a799c0436df72"
     dependencies:
       "@sinonjs/formatio" "^2.0.0"
       just-extend "^1.1.27"
@@ -2492,17 +2475,18 @@ Lockfile:
       tar-pack "^3.4.0"
   
   nodemon@^1.11.0:
-    version "1.15.0"
-    resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-1.15.0.tgz#ddec01eeb9c33d53dfbf7eddb2fa32f723474c1e"
+    version "1.17.1"
+    resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-1.17.1.tgz#cdb4bc53d7a86d6162143a1a44d7adf927d8652f"
     dependencies:
       chokidar "^2.0.2"
       debug "^3.1.0"
       ignore-by-default "^1.0.1"
       minimatch "^3.0.4"
       pstree.remy "^1.1.0"
-      semver "^5.4.1"
+      semver "^5.5.0"
+      supports-color "^5.2.0"
       touch "^3.1.0"
-      undefsafe "^2.0.1"
+      undefsafe "^2.0.2"
       update-notifier "^2.3.0"
   
   nopt@3.x:
@@ -2941,11 +2925,12 @@ Lockfile:
     dependencies:
       is-equal-shallow "^0.1.3"
   
-  regex-not@^1.0.0:
-    version "1.0.0"
-    resolved "https://registry.yarnpkg.com/regex-not/-/regex-not-1.0.0.tgz#42f83e39771622df826b02af176525d6a5f157f9"
+  regex-not@^1.0.0, regex-not@^1.0.2:
+    version "1.0.2"
+    resolved "https://registry.yarnpkg.com/regex-not/-/regex-not-1.0.2.tgz#1f4ece27e00b0b65e0247a6810e6a85d83a5752c"
     dependencies:
-      extend-shallow "^2.0.1"
+      extend-shallow "^3.0.2"
+      safe-regex "^1.1.0"
   
   regexpu-core@^2.0.0:
     version "2.0.0"
@@ -3043,6 +3028,10 @@ Lockfile:
     version "1.1.7"
     resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.1.7.tgz#203114d82ad2c5ed9e8e0411b3932875e889e97b"
   
+  ret@~0.1.10:
+    version "0.1.15"
+    resolved "https://registry.yarnpkg.com/ret/-/ret-0.1.15.tgz#b8a4825d5bdb1fc3f6f53c2bc33f81388681c7bc"
+  
   right-align@^0.1.1:
     version "0.1.3"
     resolved "https://registry.yarnpkg.com/right-align/-/right-align-0.1.3.tgz#61339b722fe6a3515689210d24e14c96148613ef"
@@ -3059,6 +3048,12 @@ Lockfile:
     version "5.1.1"
     resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.1.tgz#893312af69b2123def71f57889001671eeb2c853"
   
+  safe-regex@^1.1.0:
+    version "1.1.0"
+    resolved "https://registry.yarnpkg.com/safe-regex/-/safe-regex-1.1.0.tgz#40a3669f3b077d1e943d44629e157dd48023bf2e"
+    dependencies:
+      ret "~0.1.10"
+  
   samsam@1.3.0:
     version "1.3.0"
     resolved "https://registry.yarnpkg.com/samsam/-/samsam-1.3.0.tgz#8d1d9350e25622da30de3e44ba692b5221ab7c50"
@@ -3069,7 +3064,7 @@ Lockfile:
     dependencies:
       semver "^5.0.3"
   
-  "semver@2 || 3 || 4 || 5", semver@^5.0.3, semver@^5.1.0, semver@^5.3.0, semver@^5.4.1:
+  "semver@2 || 3 || 4 || 5", semver@^5.0.3, semver@^5.1.0, semver@^5.3.0, semver@^5.5.0:
     version "5.5.0"
     resolved "https://registry.yarnpkg.com/semver/-/semver-5.5.0.tgz#dc4bbc7a6ca9d916dee5d43516f0092b58f7b8ab"
   
@@ -3120,8 +3115,8 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
   
   sinon@^4.1.2:
-    version "4.3.0"
-    resolved "https://registry.yarnpkg.com/sinon/-/sinon-4.3.0.tgz#cec9b27d5f4e2c63c1a79c9dc1c05d34bb088234"
+    version "4.4.2"
+    resolved "https://registry.yarnpkg.com/sinon/-/sinon-4.4.2.tgz#c4c41d4bd346e1d33594daec2d5df0548334fc65"
     dependencies:
       "@sinonjs/formatio" "^2.0.0"
       diff "^3.1.0"
@@ -3223,19 +3218,27 @@ Lockfile:
       signal-exit "^3.0.2"
       which "^1.3.0"
   
-  spdx-correct@~1.0.0:
-    version "1.0.2"
-    resolved "https://registry.yarnpkg.com/spdx-correct/-/spdx-correct-1.0.2.tgz#4b3073d933ff51f3912f03ac5519498a4150db40"
+  spdx-correct@^3.0.0:
+    version "3.0.0"
+    resolved "https://registry.yarnpkg.com/spdx-correct/-/spdx-correct-3.0.0.tgz#05a5b4d7153a195bc92c3c425b69f3b2a9524c82"
     dependencies:
-      spdx-license-ids "^1.0.2"
+      spdx-expression-parse "^3.0.0"
+      spdx-license-ids "^3.0.0"
   
-  spdx-expression-parse@~1.0.0:
-    version "1.0.4"
-    resolved "https://registry.yarnpkg.com/spdx-expression-parse/-/spdx-expression-parse-1.0.4.tgz#9bdf2f20e1f40ed447fbe273266191fced51626c"
+  spdx-exceptions@^2.1.0:
+    version "2.1.0"
+    resolved "https://registry.yarnpkg.com/spdx-exceptions/-/spdx-exceptions-2.1.0.tgz#2c7ae61056c714a5b9b9b2b2af7d311ef5c78fe9"
   
-  spdx-license-ids@^1.0.2:
-    version "1.2.2"
-    resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-1.2.2.tgz#c9df7a3424594ade6bd11900d596696dc06bac57"
+  spdx-expression-parse@^3.0.0:
+    version "3.0.0"
+    resolved "https://registry.yarnpkg.com/spdx-expression-parse/-/spdx-expression-parse-3.0.0.tgz#99e119b7a5da00e05491c9fa338b7904823b41d0"
+    dependencies:
+      spdx-exceptions "^2.1.0"
+      spdx-license-ids "^3.0.0"
+  
+  spdx-license-ids@^3.0.0:
+    version "3.0.0"
+    resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.0.tgz#7a7cd28470cc6d3a1cfe6d66886f6bc430d3ac87"
   
   split-string@^3.0.1, split-string@^3.0.2:
     version "3.1.0"
@@ -3352,8 +3355,8 @@ Lockfile:
       has-flag "^1.0.0"
   
   supports-color@^5.1.0, supports-color@^5.2.0:
-    version "5.2.0"
-    resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.2.0.tgz#b0d5333b1184dd3666cbe5aa0b45c5ac7ac17a4a"
+    version "5.3.0"
+    resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.3.0.tgz#5b24ac15db80fa927cf5227a4a33fd3c4c7676c0"
     dependencies:
       has-flag "^3.0.0"
   
@@ -3424,12 +3427,13 @@ Lockfile:
       repeat-string "^1.6.1"
   
   to-regex@^3.0.1:
-    version "3.0.1"
-    resolved "https://registry.yarnpkg.com/to-regex/-/to-regex-3.0.1.tgz#15358bee4a2c83bd76377ba1dc049d0f18837aae"
+    version "3.0.2"
+    resolved "https://registry.yarnpkg.com/to-regex/-/to-regex-3.0.2.tgz#13cfdd9b336552f30b51f33a8ae1b42a7a7599ce"
     dependencies:
-      define-property "^0.2.5"
-      extend-shallow "^2.0.1"
-      regex-not "^1.0.0"
+      define-property "^2.0.2"
+      extend-shallow "^3.0.2"
+      regex-not "^1.0.2"
+      safe-regex "^1.1.0"
   
   touch@^3.1.0:
     version "3.1.0"
@@ -3438,8 +3442,8 @@ Lockfile:
       nopt "~1.0.10"
   
   tough-cookie@~2.3.0:
-    version "2.3.3"
-    resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-2.3.3.tgz#0b618a5565b6dea90bf3425d04d55edc475a7561"
+    version "2.3.4"
+    resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-2.3.4.tgz#ec60cee38ac675063ffc97a5c18970578ee83655"
     dependencies:
       punycode "^1.4.1"
   
@@ -3492,7 +3496,7 @@ Lockfile:
     version "0.0.6"
     resolved "https://registry.yarnpkg.com/uid-number/-/uid-number-0.0.6.tgz#0ea10e8035e8eb5b8e4449f06da1c730663baa81"
   
-  undefsafe@^2.0.1:
+  undefsafe@^2.0.2:
     version "2.0.2"
     resolved "https://registry.yarnpkg.com/undefsafe/-/undefsafe-2.0.2.tgz#225f6b9e0337663e0d8e7cfd686fc2836ccace76"
     dependencies:
@@ -3525,13 +3529,8 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/unzip-response/-/unzip-response-2.0.1.tgz#d2f0f737d16b0615e72a6935ed04214572d56f97"
   
   upath@^1.0.0:
-    version "1.0.2"
-    resolved "https://registry.yarnpkg.com/upath/-/upath-1.0.2.tgz#80aaae5395abc5fd402933ae2f58694f0860204c"
-    dependencies:
-      lodash.endswith "^4.2.1"
-      lodash.isfunction "^3.0.8"
-      lodash.isstring "^4.0.1"
-      lodash.startswith "^4.2.1"
+    version "1.0.4"
+    resolved "https://registry.yarnpkg.com/upath/-/upath-1.0.4.tgz#ee2321ba0a786c50973db043a50b7bcba822361d"
   
   update-notifier@^2.3.0:
     version "2.3.0"
@@ -3584,11 +3583,11 @@ Lockfile:
       user-home "^1.1.1"
   
   validate-npm-package-license@^3.0.1:
-    version "3.0.1"
-    resolved "https://registry.yarnpkg.com/validate-npm-package-license/-/validate-npm-package-license-3.0.1.tgz#2804babe712ad3379459acfbe24746ab2c303fbc"
+    version "3.0.3"
+    resolved "https://registry.yarnpkg.com/validate-npm-package-license/-/validate-npm-package-license-3.0.3.tgz#81643bcbef1bdfecd4623793dc4648948ba98338"
     dependencies:
-      spdx-correct "~1.0.0"
-      spdx-expression-parse "~1.0.0"
+      spdx-correct "^3.0.0"
+      spdx-expression-parse "^3.0.0"
   
   verror@1.10.0:
     version "1.10.0"
@@ -3708,5 +3707,17 @@ Lockfile:
       window-size "0.1.0"
 
 Trace: 
-  Error: ETXTBSY: text file is busy, unlink '/home/ubuntu/services/amqphelp/node_modules/.bin/nodemon'
-      at Error (native)
+  Error: Command failed.
+  Exit code: 1
+  Command: C:\WINDOWS\system32\cmd.exe
+  Arguments: /d /s /c npm run clean && mkdir -p dist && babel app -s -D -d dist
+  Directory: C:\Users\Dell\miler\services\amqphelp
+  Output:
+  
+      at ProcessTermError.MessageError (C:\Program Files (x86)\Yarn\lib\cli.js:186:110)
+      at new ProcessTermError (C:\Program Files (x86)\Yarn\lib\cli.js:226:113)
+      at ChildProcess.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:30281:17)
+      at emitTwo (events.js:126:13)
+      at ChildProcess.emit (events.js:214:7)
+      at maybeClose (internal/child_process.js:925:16)
+      at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)
