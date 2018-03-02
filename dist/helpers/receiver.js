@@ -3,10 +3,10 @@
 module.exports = class AmqpReceiver {
     constructor() {
         this.register();
+        this.service_name = process.env.npm_package_name;
     }
 
     register() {
-        this.service_name = '';
         this.receive_from = '';
         this.payload_name = '';
         this.amqp = null;
