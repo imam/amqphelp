@@ -90,9 +90,9 @@ describe("[ Messaging Helper | Mongodb Attachers]", ()=>{
             expect(amqp_send_stub.firstCall.args[1].update).to.equal('update_value')
         })
 
-        it("should call next once", ()=>{
-            expect(next_stub.calledOnce).to.equal(true)
-        })
+        // it("should call next once", ()=>{
+        //     expect(next_stub.calledOnce).to.equal(true)
+        // })
 
         //TODO:: Error call
     })
@@ -138,9 +138,9 @@ describe("[ Messaging Helper | Mongodb Attachers]", ()=>{
             expect(amqp_send_stub.firstCall.args[0]).to.equal('test_queue_name')
         })
 
-        it("should call next once", ()=>{
-            expect(next_stub.calledOnce).to.equal(true)
-        })
+        // it("should call next once", ()=>{
+        //     expect(next_stub.calledOnce).to.equal(true)
+        // })
 
         //TODO:: Error call
     })
