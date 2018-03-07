@@ -17,19 +17,17 @@ module.exports = class MongoDB extends _bind2.default {
 
     update(queue_name, schema, amqp) {
         let self = this;
-        schema.post('update', function (next) {
+        schema.post('update', function () {
             amqp.actions.send(queue_name, {
                 id: self._conditions._id,
                 update: self._update
             });
-            next();
         });
     }
 
     delete(queue_name, schema, amqp) {
-        schema.post('remove', function (next) {
+        schema.post('remove', function () {
             amqp.actions.send(queue_name, this);
-            next();
         });
     }
 
