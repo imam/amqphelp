@@ -4,8 +4,8 @@
     "options": {
         "name": "some-rabbit",
         "cookie": "SWQOKODSQALRPCLNMEQG",
-        "user": "guest",
-        "pass": "guest",
+        "user": "miler",
+        "pass": "miler",
         "vhost": "/",
         "reconnect": true
     }
