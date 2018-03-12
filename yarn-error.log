@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js run build
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add -D mongoose
 
 PATH: 
   C:\Users\Dell\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Dell\bin;C:\Program Files\ImageMagick-7.0.7-Q16;C:\Program Files\ImageMagick-7.0.7-Q8;C:\ProgramData\Oracle\Java\javapath;C:\Program Files\Docker\Docker\Resources\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\xampp\php;C:\ProgramData\ComposerSetup\bin;C:\Program Files\Amazon\AWSCLI;C:\Program Files\OpenSSH\bin;C:\ProgramData\chocolatey\bin;C:\tools\sqlite;C:\Program Files (x86)\Heroku\bin;C:\Program Files (x86)\git\cmd;C:\PostgreSQL\pg96\bin;C:\Program Files (x86)\OpenVPN\bin;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn;C:\Program Files (x86)\Microsoft SQL Server\130\Tools\Binn;C:\Program Files\Microsoft SQL Server\130\Tools\Binn;C:\Program Files\Microsoft SQL Server\130\DTS\Binn;C:\Program Files\CMake\bin;C:\Program Files\nodejs;C:\HashiCorp\Vagrant\bin;C:\Program Files\Git\cmd;C:\Program Files\PuTTY;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit;C:\Program Files (x86)\Yarn\bin;C:\Ruby23-x64\bin;C:\Users\Dell\AppData\Local\Microsoft\WindowsApps;C:\Users\Dell\AppData\Roaming\Composer\vendor\bin;C:\Python27;C:\Python27\Scripts;C:\Users\Dell\AppData\Roaming\Python\Scripts;C:\PROGRA~2\Oracle\VirtualBox;C:\Users\Dell\AppData\Local\atom\bin;C:\Program Files\PostgreSQL\9.3\bin;C:\Users\Dell\Homestead\bin;C:\Program Files\Heroku\bin;C:\Program Files\Java\jdk1.8.0_144\bin;C:\Users\Dell\AppData\Local\Turbo\Cmd;D:\Program Files\MongoDB\Server\3.6\bin;C:\msys32\usr\bin;C:\msys32\usr\local\bin;C:\Users\Dell\AppData\Roaming\npm;D:\Qt\Qt5.5.1\5.5\mingw492_32\bin;D:\Program Files\Microsoft VS Code\bin;C:\Users\Dell\AppData\Local\Yarn\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
@@ -151,9 +151,9 @@ Lockfile:
     version "2.2.1"
     resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-2.2.1.tgz#b432dd3358b634cf75e1e4664368240533c1ddbe"
   
-  ansi-styles@^3.2.0:
-    version "3.2.0"
-    resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-3.2.0.tgz#c159b8d5be0f9e5a6f346dab94f16ce022161b88"
+  ansi-styles@^3.2.1:
+    version "3.2.1"
+    resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-3.2.1.tgz#41fbb20243e50b12be0f04b8dedbf07520ce841d"
     dependencies:
       color-convert "^1.9.0"
   
@@ -912,8 +912,8 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-4.1.0.tgz#d545635be1e33c542649c69173e5de6acfae34dd"
   
   caniuse-lite@^1.0.30000792:
-    version "1.0.30000810"
-    resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000810.tgz#47585fffce0e9f3593a6feea4673b945424351d9"
+    version "1.0.30000813"
+    resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000813.tgz#7b25e27fdfb8d133f3c932b01f77452140fcc6c9"
   
   capture-stack-trace@^1.0.0:
     version "1.0.0"
@@ -955,12 +955,12 @@ Lockfile:
       supports-color "^2.0.0"
   
   chalk@^2.0.1:
-    version "2.3.1"
-    resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.3.1.tgz#523fe2678aec7b04e8041909292fe8b17059b796"
+    version "2.3.2"
+    resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.3.2.tgz#250dc96b07491bfd601e648d66ddf5f60c7a5c65"
     dependencies:
-      ansi-styles "^3.2.0"
+      ansi-styles "^3.2.1"
       escape-string-regexp "^1.0.5"
-      supports-color "^5.2.0"
+      supports-color "^5.3.0"
   
   check-error@^1.0.2:
     version "1.0.2"
@@ -1241,8 +1241,8 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/diff/-/diff-3.2.0.tgz#c9ce393a4b7cbd0b058a725c93df299027868ff9"
   
   diff@^3.1.0:
-    version "3.4.0"
-    resolved "https://registry.yarnpkg.com/diff/-/diff-3.4.0.tgz#b1d85507daf3964828de54b37d0d73ba67dda56c"
+    version "3.5.0"
+    resolved "https://registry.yarnpkg.com/diff/-/diff-3.5.0.tgz#800c0dd1e0a8bfbc95835c202ad220fe317e5a12"
   
   dot-prop@^4.1.0:
     version "4.2.0"
@@ -1269,8 +1269,8 @@ Lockfile:
       jsbn "~0.1.0"
   
   electron-to-chromium@^1.3.30:
-    version "1.3.34"
-    resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.34.tgz#d93498f40391bb0c16a603d8241b9951404157ed"
+    version "1.3.36"
+    resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.36.tgz#0eabf71a9ebea9013fb1cc35a390e068624f27e8"
   
   error-ex@^1.2.0:
     version "1.3.1"
@@ -2080,8 +2080,8 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
   
   js-yaml@3.x:
-    version "3.10.0"
-    resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.10.0.tgz#2e78441646bd4682e963f22b6e92823c309c62dc"
+    version "3.11.0"
+    resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.11.0.tgz#597c1a8bd57152f26d622ce4117851a51f5ebaef"
     dependencies:
       argparse "^1.0.7"
       esprima "^4.0.0"
@@ -2879,8 +2879,8 @@ Lockfile:
       string_decoder "~0.10.x"
   
   readable-stream@^2.0.2, readable-stream@^2.0.6, readable-stream@^2.1.4:
-    version "2.3.4"
-    resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.3.4.tgz#c946c3f47fa7d8eabc0b6150f4a12f69a4574071"
+    version "2.3.5"
+    resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.3.5.tgz#b4f85003a938cbb6ecbce2a124fb1012bd1a838d"
     dependencies:
       core-util-is "~1.0.0"
       inherits "~2.0.3"
@@ -3354,7 +3354,7 @@ Lockfile:
     dependencies:
       has-flag "^1.0.0"
   
-  supports-color@^5.1.0, supports-color@^5.2.0:
+  supports-color@^5.1.0, supports-color@^5.2.0, supports-color@^5.3.0:
     version "5.3.0"
     resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.3.0.tgz#5b24ac15db80fa927cf5227a4a33fd3c4c7676c0"
     dependencies:
@@ -3707,17 +3707,4 @@ Lockfile:
       window-size "0.1.0"
 
 Trace: 
-  Error: Command failed.
-  Exit code: 1
-  Command: C:\WINDOWS\system32\cmd.exe
-  Arguments: /d /s /c npm run clean && mkdir -p dist && babel app -s -D -d dist
-  Directory: C:\Users\Dell\miler\services\amqphelp
-  Output:
-  
-      at ProcessTermError.MessageError (C:\Program Files (x86)\Yarn\lib\cli.js:186:110)
-      at new ProcessTermError (C:\Program Files (x86)\Yarn\lib\cli.js:226:113)
-      at ChildProcess.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:30281:17)
-      at emitTwo (events.js:126:13)
-      at ChildProcess.emit (events.js:214:7)
-      at maybeClose (internal/child_process.js:925:16)
-      at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)
+  Error: EBUSY: resource busy or locked, unlink 'C:\Users\Dell\miler\services\amqphelp\node_modules\.bin\nodemon'

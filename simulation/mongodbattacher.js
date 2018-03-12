@@ -18,10 +18,10 @@ const data = new Test({title: 'Halooo', subtitle: "ho"})
 
 data.save(err=>{
     if(err) console.log(err);
-})
 
-data.update({title: 'yaaa'}, err=>{
-    if(err) console.log(err)
-})
+    data.update({title: 'yaaa'}, err=>{
+        if(err) console.log(err)
+    })
 
-data.remove()
+    data.remove()
+})
