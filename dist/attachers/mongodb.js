@@ -29,26 +29,40 @@ module.exports = class MongoDB extends _bind2.default {
 
     update(queue_name, schema, amqp) {
         return new Promise((resolve, reject) => {
-            schema.post('update', _asyncToGenerator(function* () {
-                yield amqp.actions.send(queue_name, {
-                    id: this._conditions._id,
-                    update: this._update
+            schema.post('update', (() => {
+                var _ref2 = _asyncToGenerator(function* (doc, next) {
+                    yield amqp.actions.send(queue_name, {
+                        id: this._conditions._id,
+                        update: this._update
+                    });
+                    next();
+                    resolve();
                 });
-                resolve();
-            }));
+
+                return function (_x2, _x3) {
+                    return _ref2.apply(this, arguments);
+                };
+            })());
         });
     }
 
     delete(queue_name, schema, amqp) {
         return new Promise((() => {
             var _ref3 = _asyncToGenerator(function* (resolve) {
-                schema.post('remove', _asyncToGenerator(function* () {
-                    yield amqp.actions.send(queue_name, this);
-                    resolve();
-                }));
+                schema.post('remove', (() => {
+                    var _ref4 = _asyncToGenerator(function* (doc, next) {
+                        yield amqp.actions.send(queue_name, this);
+                        next();
+                        resolve();
+                    });
+
+                    return function (_x5, _x6) {
+                        return _ref4.apply(this, arguments);
+                    };
+                })());
             });
 
-            return function (_x2) {
+            return function (_x4) {
                 return _ref3.apply(this, arguments);
             };
         })());

@@ -15,11 +15,12 @@ module.exports = class MongoDB extends Bind{
     
     update(queue_name, schema, amqp){
         return new Promise((resolve, reject)=>{
-            schema.post('update', async function(){
+            schema.post('update', async function(doc, next){
                 await amqp.actions.send(queue_name, {
                     id: this._conditions._id,
                     update: this._update
                 })
+                next();
                 resolve();
             })
         })
@@ -27,8 +28,9 @@ module.exports = class MongoDB extends Bind{
     
     delete(queue_name, schema, amqp){
         return new Promise(async (resolve)=>{
-            schema.post('remove', async function(){
+            schema.post('remove', async function(doc, next){
                 await amqp.actions.send(queue_name, this);
+                next();
                 resolve();
             })
         })
