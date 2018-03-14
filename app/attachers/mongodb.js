@@ -5,7 +5,7 @@ module.exports = class MongoDB extends Bind{
     
     create(queue_name, schema, amqp){
         return new Promise((resolve, reject)=>{
-            schema.pre('save', async function(next){
+            schema.post('save', async function(doc, next){
                 await amqp.actions.send(queue_name, this)
                 next();
                 resolve();
