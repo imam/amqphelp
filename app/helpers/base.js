@@ -14,6 +14,10 @@ module.exports  = class Base{
         this._attacher = [];
         this.service_name = process.env.npm_package_name;
     }
+
+    _getAttacher(attacher_name){
+        return _.findLast(this._attacher, { name: attacher_name })
+    }
     
     /** 
      * Register the current service name
@@ -55,13 +59,36 @@ module.exports  = class Base{
         if(!services_to){
             throw new Error('Services to send is empty')
         }
-        let attacher = _.findLast(this._attacher, {name: attacher_name})
+        let attacher = this._getAttacher(attacher_name);
+
+        let options = services_to;
+        services_to = this._servicesToMapper(services_to);
+
+        this._attachToAttacher(attacher, schema_name, schema, services_to, options);
+    }
+
+    _attachToAttacher(attacher, schema_name, schema, services_to, options){
         let self = this;
+        let current_service = this.service_name;
+
         _.map(services_to, service=>{
-            attacher.attacher.create(`create_${schema_name}_from_${this.service_name}_for_${service}`, schema, self)
-            attacher.attacher.update(`update_${schema_name}_from_${this.service_name}_for_${service}`, schema, self)
-            attacher.attacher.delete(`delete_${schema_name}_from_${this.service_name}_for_${service}`, schema, self)
+            attacher.attacher.create(`create_${schema_name}_from_${current_service}_for_${service}`, schema_name, current_service, service, schema, self, options)
+            attacher.attacher.update(`update_${schema_name}_from_${current_service}_for_${service}`, schema_name, current_service, service, schema, self, options)
+            attacher.attacher.delete(`delete_${schema_name}_from_${current_service}_for_${service}`, schema_name, current_service, service, schema, self, options)
         })
+    }
+
+    // Get all services name and map it into single array
+    _servicesToMapper(services_to){
+        return _(services_to).map(service => {
+            if (_.isPlainObject(service)) {
+                if (service.name) {
+                    return service.name;
+                }
+                throw new Error('Name is not defined in object');
+            }
+            return service;
+        }).value(); 
     }
 
     /**
