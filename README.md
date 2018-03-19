@@ -32,7 +32,7 @@ amqphelp.model('mongo', payload_name, modelSchema, entitiesToSendTo)
 For example, I want to send any changes that a mongodb model named `employee` made to an entity named `boss`. We can do
 
 ```javascript
-amqphelp.model('mongo', 'employee', modelSchema, 'boss')
+amqphelp.model('mongo', 'employee', modelSchema, ['boss'])
 ```
 
 If my `service_name` is `office`, then every time `employee` changed, it will push these queues to RabbitMq:
@@ -42,6 +42,14 @@ If my `service_name` is `office`, then every time `employee` changed, it will pu
 `delete_employee_from_office_for_boss`
 
 You can receive these with default `receive` method from `amqphelp`, but we made `receiver` class for more convenience use of this feature.
+
+#### Populate
+
+If you want to populate a document before sending it to RabbitMq, you can send an object contains `name` for entity's name and `populate` for the field that you want to be populated.
+
+`amqphelp.model('mongo', 'employee', modelSchema, [{name: 'boss', populate: ['companies']})]`
+
+`Populate` should be an array of `path`.
 
 ## Receiving from model
 
