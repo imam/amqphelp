@@ -45,7 +45,7 @@ You can receive these with default `receive` method from `amqphelp`, but we made
 
 #### Populate
 
-If you want to populate a document before sending it to RabbitMq, you can send an object contains `name` for entity's name and `populate` for the field that you want to be populated.
+If you want to populate a document before sending it to RabbitMq, you can send an object contains `name` for entity to send's name and `populate` for the field that you want to be populated.
 
 `amqphelp.model('mongo', 'employee', modelSchema, [{name: 'boss', populate: ['companies']})]`
 
