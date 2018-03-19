@@ -46,6 +46,8 @@ export class MessagingAction {
 
     let the_queue = await channel.sendToQueue(queue_name, new Buffer(output));
 
+    await channel.close()
+    
     if (process.env.NODE_ENV !== "test") console.log(`[o] Sent '${output}'`);
 
     return true;

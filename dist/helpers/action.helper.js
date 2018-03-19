@@ -53,6 +53,8 @@ class MessagingAction {
 
             let the_queue = yield channel.sendToQueue(queue_name, new Buffer(output));
 
+            yield channel.close();
+
             if (process.env.NODE_ENV !== "test") console.log(`[o] Sent '${output}'`);
 
             return true;
