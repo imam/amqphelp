@@ -81,7 +81,6 @@ module.exports = class Base {
 
     _attachToAttacher(attacher, schema_name, schema, services_to, options) {
         let self = this;
-
         let current_service = this.service_name;
 
         _lodash2.default.map(services_to, service => {
