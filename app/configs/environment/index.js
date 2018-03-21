@@ -8,6 +8,10 @@ dotenv.config({ path: `./envs/.env.${current_env}` });
 
 // Export the config object based on the NODE_ENV
 // ==============================================
-module.exports = _.merge(
-    require('./shared'),
-    require('./' + current_env + '.js') || {});
+if(process.env.NODE_ENV == "test"){
+    module.exports = require('./shared');
+} else {
+    module.exports = _.merge(
+        require('./shared'),
+        require('./' + current_env + '.js') || {});
+}
