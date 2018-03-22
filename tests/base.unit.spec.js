@@ -41,7 +41,7 @@ describe("[ Messaging Helper | Messaging Base ]", function(){
     })
   })
   
-  describe(" success call on model function | map", ()=>{
+  describe(" success call on model function | map |", ()=>{
     let find_last_stub, map_stub, base_object, attacher;
     
     beforeEach(()=>{
@@ -61,22 +61,22 @@ describe("[ Messaging Helper | Messaging Base ]", function(){
       })
       
       base_object = new base({settings: {}})
-      base_object.model('a', 'a', 'schema', ['a'])
+      base_object.model('a', 'schema_name', 'schema', ['a'])
     })
     
     it("should fire create with correct arguments", ()=>{
-      expect(attacher.create.firstCall.args[0]).to.equal('create_a_from_amqphelp_for_test')
-      expect(attacher.create.firstCall.args[1]).to.equal('schema')
+      expect(attacher.create.firstCall.args[0]).to.equal('create_schema_name_from_amqphelp_for_test')
+      expect(attacher.create.firstCall.args[1]).to.equal('schema_name')
     })
     
     it("should fire update with correct arguments", ()=>{
-      expect(attacher.update.firstCall.args[0]).to.equal('update_a_from_amqphelp_for_test')
-      expect(attacher.create.firstCall.args[1]).to.equal('schema')
+      expect(attacher.update.firstCall.args[0]).to.equal('update_schema_name_from_amqphelp_for_test')
+      expect(attacher.create.firstCall.args[1]).to.equal('schema_name')
     })
     
     it("should fire update with correct arguments", ()=>{
-      expect(attacher.update.firstCall.args[0]).to.equal('update_a_from_amqphelp_for_test')
-      expect(attacher.create.firstCall.args[1]).to.equal('schema')
+      expect(attacher.update.firstCall.args[0]).to.equal('update_schema_name_from_amqphelp_for_test')
+      expect(attacher.create.firstCall.args[1]).to.equal('schema_name')
     })
     
     afterEach(()=>{

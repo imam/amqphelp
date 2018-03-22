@@ -18,15 +18,14 @@ describe("[ Messaging Helper | Ping Action ]", function(){
 
     let messagingChannel, messagingAction;
 
-    let interval, clock;
+    let interval, clock, publish_stub;
 
     beforeEach(async ()=>{
       let utils = new MessagingUtil();
       messagingChannel = new MessagingChannel({utils});
 
       let channel_stub = sinon.stub({
-        assertQueue: () => { return Promise.resolve(true) },
-        sendToQueue: () => { return 1 }
+        publish(){return 1}
       });
 
       let settings = {
@@ -44,13 +43,20 @@ describe("[ Messaging Helper | Ping Action ]", function(){
 
       messagingAction = new MessagingAction({ settings:settings, MessagingChannel: messagingChannel });
 
-      clock = sinon.useFakeTimers();
-    });
+      publish_stub =sinon.stub(messagingAction, 'publish')
 
-    //TODO:: Unit test bug
-    it('should increase ping count', async ()=>{
+      clock = sinon.useFakeTimers();
       interval = await messagingAction.ping();
       clock.tick(6000);
+    });
+    
+    it('should call publish', ()=>{
+      expect(publish_stub.calledTwice).to.true
+      expect(publish_stub.firstCall.args[0]).to.equal('amqphelp_heartbeat')
+      expect(publish_stub.firstCall.args[1]).to.equal('beat')
+    })
+
+    it('should increase ping count', async ()=>{
       expect(messagingAction.ping_count).to.equal(2);
     });
 

@@ -16,65 +16,46 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 module.exports = class MongoDB extends _bind2.default {
 
     create(queue_name, schema_name, current_service, service_to, schema, amqp, options) {
-        return this._attachToAmqp(queue_name, schema_name, current_service, service_to, schema, amqp, options, 'save', (() => {
-            var _ref = _asyncToGenerator(function* (queue_name, doc) {
-                yield amqp.actions.send(queue_name, doc);
-            });
-
-            return function (_x, _x2) {
-                return _ref.apply(this, arguments);
-            };
-        })());
+        return this._attachToAmqp(queue_name, schema_name, current_service, service_to, schema, amqp, options, 'save');
     }
 
     update(queue_name, schema_name, current_service, service_to, schema, amqp, options) {
-        return this._attachToAmqp(queue_name, schema_name, current_service, service_to, schema, amqp, options, 'update', (() => {
-            var _ref2 = _asyncToGenerator(function* (queue_name, doc) {
-                yield amqp.actions.send(queue_name, doc);
-            });
-
-            return function (_x3, _x4) {
-                return _ref2.apply(this, arguments);
-            };
-        })());
+        return this._attachToAmqp(queue_name, schema_name, current_service, service_to, schema, amqp, options, 'update');
     }
 
     delete(queue_name, schema_name, current_service, service_to, schema, amqp, options) {
-        return this._attachToAmqp(queue_name, schema_name, current_service, service_to, schema, amqp, options, 'remove', (() => {
-            var _ref3 = _asyncToGenerator(function* (queue_name, doc) {
-                yield amqp.actions.send(queue_name, doc);
-            });
-
-            return function (_x5, _x6) {
-                return _ref3.apply(this, arguments);
-            };
-        })());
+        return this._attachToAmqp(queue_name, schema_name, current_service, service_to, schema, amqp, options, 'remove');
     }
 
-    _attachToAmqp(queue_name, schema_name, current_service, service_to, schema, amqp, options, method, action) {
+    _sendToAmqp(amqp, queue_name, doc) {
+        return _asyncToGenerator(function* () {
+            yield amqp.actions.send(queue_name, doc);
+        })();
+    }
+
+    _attachToAmqp(queue_name, schema_name, current_service, service_to, schema, amqp, options, method) {
         let self = this;
         return new Promise((() => {
-            var _ref4 = _asyncToGenerator(function* (resolve) {
+            var _ref = _asyncToGenerator(function* (resolve) {
                 schema.post(method, (() => {
-                    var _ref5 = _asyncToGenerator(function* (doc, next) {
-                        console.log(service_to);
+                    var _ref2 = _asyncToGenerator(function* (doc, next) {
 
                         yield self._populator(doc, options, service_to);
-                        yield action(queue_name, doc);
+                        yield self._sendToAmqp(queue_name, doc);
                         yield self._depopulator(doc, options, service_to);
 
                         next();
                         resolve();
                     });
 
-                    return function (_x8, _x9) {
-                        return _ref5.apply(this, arguments);
+                    return function (_x2, _x3) {
+                        return _ref2.apply(this, arguments);
                     };
                 })());
             });
 
-            return function (_x7) {
-                return _ref4.apply(this, arguments);
+            return function (_x) {
+                return _ref.apply(this, arguments);
             };
         })());
     }
@@ -83,16 +64,17 @@ module.exports = class MongoDB extends _bind2.default {
         var _this = this;
 
         return _asyncToGenerator(function* () {
-            // console.log(this._getCurrentServiceToOptions(options, service_to));
+
             options = _this._getCurrentServiceToOptions(options, service_to);
+
             if (options) {
                 _lodash2.default.each(options.populate, (() => {
-                    var _ref6 = _asyncToGenerator(function* (value) {
+                    var _ref3 = _asyncToGenerator(function* (value) {
                         yield doc.populate(value);
                     });
 
-                    return function (_x10) {
-                        return _ref6.apply(this, arguments);
+                    return function (_x4) {
+                        return _ref3.apply(this, arguments);
                     };
                 })());
                 yield doc.execPopulate();
@@ -104,15 +86,17 @@ module.exports = class MongoDB extends _bind2.default {
         var _this2 = this;
 
         return _asyncToGenerator(function* () {
+
             options = _this2._getCurrentServiceToOptions(options, service_to);
+
             if (options) {
                 _lodash2.default.each(options.populate, (() => {
-                    var _ref7 = _asyncToGenerator(function* (value) {
-                        yield doc.depopulate(value);
+                    var _ref4 = _asyncToGenerator(function* (field_to_populate) {
+                        yield doc.depopulate(field_to_populate);
                     });
 
-                    return function (_x11) {
-                        return _ref7.apply(this, arguments);
+                    return function (_x5) {
+                        return _ref4.apply(this, arguments);
                     };
                 })());
             }
@@ -120,9 +104,9 @@ module.exports = class MongoDB extends _bind2.default {
     }
 
     _getCurrentServiceToOptions(options, service_to) {
-        let data = (0, _lodash2.default)(options).filter(_lodash2.default.isPlainObject).filter(value => value.populate).filter(value => value.name == service_to).value();
-        if (data[0]) {
-            return data[0];
+        let data = (0, _lodash2.default)(options).filter(_lodash2.default.isPlainObject).filter(value => value.populate).filter(value => value.name == service_to).value()[0];
+        if (data) {
+            return data;
         } else {
             return null;
         }

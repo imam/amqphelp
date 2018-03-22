@@ -5,33 +5,30 @@ import _ from 'lodash'
 module.exports = class MongoDB extends Bind{
     
     create(queue_name, schema_name, current_service, service_to, schema, amqp, options){
-        return this._attachToAmqp(queue_name, schema_name, current_service, service_to, schema, amqp, options, 'save', async(queue_name, doc)=>{
-            await amqp.actions.send(queue_name, doc);
-        })
+        return this._attachToAmqp(queue_name, schema_name, current_service, service_to, schema, amqp, options, 'save')
     }
     
     update(queue_name, schema_name, current_service, service_to, schema, amqp, options){
-        return this._attachToAmqp(queue_name, schema_name, current_service, service_to, schema, amqp, options, 'update', async(queue_name, doc)=>{
-            await amqp.actions.send(queue_name, doc)
-        })
+        return this._attachToAmqp(queue_name, schema_name, current_service, service_to, schema, amqp, options, 'update')
     }
     
     delete(queue_name, schema_name, current_service, service_to, schema, amqp, options){
-        return this._attachToAmqp(queue_name, schema_name, current_service, service_to, schema, amqp, options, 'remove', async(queue_name, doc)=>{
-            await amqp.actions.send(queue_name, doc);
-        })
+        return this._attachToAmqp(queue_name, schema_name, current_service, service_to, schema, amqp, options, 'remove')
     }
     
-    _attachToAmqp(queue_name, schema_name, current_service, service_to, schema, amqp, options, method, action){
+    async _sendToAmqp(amqp, queue_name, doc){
+        await amqp.actions.send(queue_name, doc);
+    }
+    
+    _attachToAmqp(queue_name, schema_name, current_service, service_to, schema, amqp, options, method){
         let self = this;
         return new Promise(async (resolve)=>{
             schema.post(method, async function(doc, next){
-                console.log(service_to);
-
+                
                 await self._populator(doc, options, service_to)
-                await action(queue_name, doc)
+                await self._sendToAmqp(queue_name, doc)
                 await self._depopulator(doc, options, service_to);
-
+                
                 next();
                 resolve();
             })
@@ -39,8 +36,9 @@ module.exports = class MongoDB extends Bind{
     }
     
     async _populator(doc, options, service_to){
-        // console.log(this._getCurrentServiceToOptions(options, service_to));
+
         options = this._getCurrentServiceToOptions(options, service_to);
+
         if(options){
             _.each(options.populate, async value=>{
                 await doc.populate(value)
@@ -48,12 +46,14 @@ module.exports = class MongoDB extends Bind{
             await doc.execPopulate();
         }
     }
-
+    
     async _depopulator(doc, options, service_to){
+
         options = this._getCurrentServiceToOptions(options, service_to);
+
         if(options){
-            _.each(options.populate, async value=>{
-                await doc.depopulate(value)
+            _.each(options.populate, async field_to_populate=>{
+                await doc.depopulate(field_to_populate)
             })
         }
     }
@@ -63,9 +63,9 @@ module.exports = class MongoDB extends Bind{
         .filter(_.isPlainObject)
         .filter(value => value.populate)
         .filter(value => value.name == service_to)
-        .value()
-        if(data[0]){
-            return data[0]
+        .value()[0]
+        if(data){
+            return data
         }else{
             return null
         }

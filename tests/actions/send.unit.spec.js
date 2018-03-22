@@ -29,8 +29,9 @@ describe("[ Messaging Helper | Send Action ]", function(){
       messagingAction = new MessagingAction();
 
       channel_stub = sinon.stub({
-        assertQueue: () => { return Promise.resolve(true) },
-        sendToQueue: () => { return 1 }
+        assertQueue() { return Promise.resolve(true) },
+        sendToQueue() { return 1 },
+        close() { return 1}
       });
 
       let settings = {
@@ -63,6 +64,11 @@ describe("[ Messaging Helper | Send Action ]", function(){
       await messagingAction.send(QUEUE_NAME, MESSAGE);
       expect(channel_stub.assertQueue.calledBefore(channel_stub.sendToQueue)).to.equal(true);
     });
+
+    it('should call close once', async () => {
+      await messagingAction.send(QUEUE_NAME, MESSAGE);
+      expect(channel_stub.close.calledOnce).to.equal(true);
+    })
 
     afterEach(()=>{
       messagingChannel.create.restore();
