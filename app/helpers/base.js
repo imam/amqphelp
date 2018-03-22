@@ -97,5 +97,9 @@ module.exports  = class Base{
     modelReceive(receiver){
         receiver._init(this);
     }
+
+    ask(service, action, payload){
+        
+    }
     
 }

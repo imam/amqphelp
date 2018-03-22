@@ -41,7 +41,7 @@ module.exports = class MongoDB extends _bind2.default {
                     var _ref2 = _asyncToGenerator(function* (doc, next) {
 
                         yield self._populator(doc, options, service_to);
-                        yield self._sendToAmqp(queue_name, doc);
+                        yield self._sendToAmqp(amqp, queue_name, doc);
                         yield self._depopulator(doc, options, service_to);
 
                         next();

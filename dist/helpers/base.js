@@ -110,5 +110,7 @@ module.exports = class Base {
         receiver._init(this);
     }
 
+    ask(service, action, payload) {}
+
 };
 //# sourceMappingURL=base.js.map

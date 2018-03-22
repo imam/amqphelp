@@ -26,7 +26,7 @@ module.exports = class MongoDB extends Bind{
             schema.post(method, async function(doc, next){
                 
                 await self._populator(doc, options, service_to)
-                await self._sendToAmqp(queue_name, doc)
+                await self._sendToAmqp(amqp, queue_name, doc)
                 await self._depopulator(doc, options, service_to);
                 
                 next();
