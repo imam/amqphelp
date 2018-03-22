@@ -9,7 +9,7 @@ const _ = require('lodash')
 
 //TODO::registerServiceName
 
-describe.only("[ Messaging Helper | Messaging Base ]", function(){
+describe("[ Messaging Helper | Messaging Base ]", function(){
   describe(" success call on register service name function", ()=>{
     it("should set this.service_name", ()=>{
       let base_object = new base({settings: {}})
@@ -141,7 +141,7 @@ describe.only("[ Messaging Helper | Messaging Base ]", function(){
     })
   })
 
-  describe.only(" success call on ask", ()=>{
+  describe(" success call on ask", ()=>{
     it("should")
   })
   
