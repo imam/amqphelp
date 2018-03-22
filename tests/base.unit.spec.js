@@ -9,13 +9,17 @@ const _ = require('lodash')
 
 //TODO::registerServiceName
 
-describe("[ Messaging Helper | Register attacher]", ()=>{
-  describe(" success call on register attacher function", ()=>{
-    //TODO::_atttacher.push()
+describe.only("[ Messaging Helper | Messaging Base ]", function(){
+  describe(" success call on register service name function", ()=>{
+    it("should set this.service_name", ()=>{
+      let base_object = new base({settings: {}})
+      
+      base_object.registerServiceName('test_service_name')
+      
+      expect(base_object.service_name).to.equal('test_service_name')
+    })
   })
-})
-
-describe("[ Messaging Helper | Messaging Base ]", function(){
+  
   describe(" success call on model function", ()=>{
     let find_last_stub, map_stub, base_object;
     
@@ -87,44 +91,54 @@ describe("[ Messaging Helper | Messaging Base ]", function(){
   
   describe(" fail call on model function ", ()=>{
     //TODO:: Be more descriptive about the error messages
-
+    
     it("should throw error if attacher name is empty", ()=>{
       let base_object = new base({settings: {}});
       expect(()=>{base_object.model(undefined, 'a','a', 'a')}).to.throw()
     })
-
-
+    
+    
     it("should throw error if schema name is empty", ()=>{
       let base_object = new base({settings: {}});
       expect(()=>{base_object.model('a', undefined,'a', 'a')}).to.throw()
     })
-
-
+    
+    
     it("should throw error if schema is empty", ()=>{
       let base_object = new base({settings: {}});
       expect(()=>{base_object.model('a', 'a', undefined, 'a')}).to.throw()
     })
-
+    
     it("should throw error if services to send is empty", ()=>{
       let base_object = new base({settings: {}});
       expect(()=>{base_object.model('a', 'a', 'a', undefined,)}).to.throw()
     })
   })
-
+  
   describe(" success call on model receive function", ()=>{
-
+    
     it("should call _init from receiver", ()=>{
       let base_object = new base({settings: {}});
       let receiver = {
         _init: sinon.stub()
       }
       base_object.modelReceive(receiver);
-
+      
       expect(receiver._init.calledOnce).to.equal(true)
     })
-
-    //TODO::error call on _init from receiver
-
+    
   })
 
+  describe(" success call on _servicesToMapper", ()=>{
+    it("should successfully map service_name", ()=>{
+      let base_object = new base({settings: {}})
+
+      let result = base_object._servicesToMapper(['test_service_to', {name: 'test_service_to_2'}])
+
+      expect(result[0]).to.equal('test_service_to')
+      expect(result[1]).to.equal('test_service_to_2')
+  
+    })
+  })
+  
 });

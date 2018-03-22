@@ -9,7 +9,8 @@
     "build": "npm run clean && mkdir -p dist && babel app -s -D -d dist",
     "test": "NODE_ENV=test USECODE=app mocha --inspect=localhost:5858 --timeout 15000 --require babel-register ./tests/*.*.spec.js ./tests/*/*.*.spec.js --watch",
     "test:once": "NODE_ENV=test USECODE=app mocha --inspect=localhost:5858 --timeout 15000 --require babel-register ./tests/*.*.spec.js ./tests/*/*.*.spec.js",
-    "simulate": "npm run build && NODE_ENV=development nodemon --watch . -L --exec \"node -r babel-register\""
+    "simulate": "npm run build && NODE_ENV=development nodemon --watch . -L --exec \"node -r babel-register\"",
+    "coverage": "NODE_ENV=test nyc --reporter=lcov --reporter=text-lcov mocha  --timeout 15000 --require babel-register ./tests/*.*.spec.js ./tests/*/*.*.spec.js ./tests/*/*/*.*.spec.js"
   },
   "author": "Antoni <email.to.antoni@gmail.com>",
   "license": "ISC",

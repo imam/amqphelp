@@ -1,0 +1,911 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for helpers/action.helper.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">All files</a> / <a href="index.html">helpers</a> action.helper.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">74.19% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>69/93</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">87.04% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>47/54</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">67.86% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>19/28</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">75% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>69/92</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">60x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">60x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">60x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">60x</span>
+<span class="cline-any cline-yes">60x</span>
+<span class="cline-any cline-yes">60x</span>
+<span class="cline-any cline-yes">60x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">30x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">//TODO:: Add deeper unit test on subscribe, publish and ping
+export class MessagingAction {
+&nbsp;
+  // Depedency Injection:
+  constructor({ settings, utils, MessagingChannel, successful_rpc } = {}) {
+    // a service for handling AMQP channel creation
+    this.MessagingChannel = MessagingChannel;
+&nbsp;
+    // configuration settings
+    this.settings = settings;
+&nbsp;
+    // messaging utilities function helper
+    this.utils = utils || null;
+&nbsp;
+    // other tracked parameters
+    this.ping_count = 0;
+    this.retry_rpc = 0;
+    this.successful_rpc = successful_rpc || false;
+    this.stringify_payload;
+  }
+&nbsp;
+  /**
+   * async send - send simple payload to specify queue,
+   *              used together with async RECEIVE
+   * @param  {String} queue_name      queue name
+   * @param  {Any} queue_message      the payload
+   * @return {Promise}                promise of true
+   */
+  async send(queue_name, queue_message){
+&nbsp;
+    if(queue_name === undefined || queue_message === undefined){
+      throw new Error('Queue name and queue message is undefined')
+    }
+&nbsp;
+    let self = this;
+&nbsp;
+    let channel = await this.MessagingChannel.create(
+      this.settings.connection.host,
+      this.settings.connection.options.user,
+      this.settings.connection.options.pass
+    );
+&nbsp;
+    await channel.assertQueue(queue_name);
+&nbsp;
+    let output = JSON.stringify(queue_message);
+&nbsp;
+    let the_queue = await channel.sendToQueue(queue_name, new Buffer(output));
+&nbsp;
+    await channel.close()
+    
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (process.env.NODE_ENV !== "test") <span class="cstat-no" title="statement not covered" >console.log(`[o] Sent '${output}'`);</span>
+&nbsp;
+    return true;
+  }
+&nbsp;
+  /**
+   * async receive - receive simple payload from the queue,
+   *                 used together with async SEND
+   * @param  {String} queue_name    queue name
+   * @param  {Function} callback    callback function with params(payload)
+   */
+  async receive(queue_name, callback){
+&nbsp;
+    if(!queue_name || !callback){
+      throw new TypeError()
+    }
+&nbsp;
+    let self = this;
+&nbsp;
+    let channel = await this.MessagingChannel.create(
+      this.settings.connection.host,
+      this.settings.connection.options.user,
+      this.settings.connection.options.pass
+    );
+&nbsp;
+    await channel.assertQueue(queue_name);
+    channel.consume(queue_name, function(msg) {
+      <span class="missing-if-branch" title="else path not taken" >E</span>if (msg !== null) {
+        channel.ack(msg);
+        callback(JSON.parse(msg.content.toString()));
+      }
+    });
+&nbsp;
+  }
+&nbsp;
+  /**
+   * async create_task - request some task to be done, not waiting for the result,
+   *                     but will try to recover task if worker failed to process the work,
+   *                     used to together with create_task
+   *
+   * @param  {type} queue_name=null description
+   * @param  {type} payload=null    description
+   * @param  {type} durable=true    description
+   * @param  {type} persistent=true description
+   * @return {type}                 description
+   */
+  async create_task(queue_name=null, payload=null, durable=true, persistent=true){
+&nbsp;
+    if(queue_name===null || payload===null){
+      throw new Error('Queue name and payload is required, as first and second params');
+    }
+&nbsp;
+    let self = this;
+    let channel = await this.MessagingChannel.create(
+      this.settings.connection.host,
+      this.settings.connection.options.user,
+      this.settings.connection.options.pass
+    );
+&nbsp;
+    await channel.assertQueue(queue_name, {durable: durable});
+&nbsp;
+    this.stringify_payload = JSON.stringify(payload);
+&nbsp;
+    let the_queue = channel.sendToQueue(queue_name, new Buffer(this.stringify_payload), {persistent: persistent});
+  }
+&nbsp;
+  /**  
+   * async queue_worker - setup service worker for processing some task,
+   *                      used to together with create_task
+   *
+   * @param  {type} queue_name=null description
+   * @param  {type} prefetch=3      description
+   * @param  {type} durable=true    description
+   * @return {type}                 description
+   */
+  async queue_worker(queue_name=null, prefetch=3, durable=true){
+&nbsp;
+    if(queue_name===null){
+      throw new Error('Queue name is required, as the first params');
+    }
+&nbsp;
+    let self = this;
+    let channel = await this.MessagingChannel.create(
+      this.settings.connection.host,
+      this.settings.connection.options.user,
+      this.settings.connection.options.pass
+    );
+&nbsp;
+    await channel.assertQueue(queue_name, {durable: durable});
+&nbsp;
+    channel.prefetch(prefetch);
+&nbsp;
+    channel.consume(queue_name, <span class="fstat-no" title="function not covered" >function(</span>msg) {
+<span class="cstat-no" title="statement not covered" >      if (msg !== null) {</span>
+        // events[queue_name](msg.content);
+<span class="cstat-no" title="statement not covered" >        ch.ack(msg);</span>
+      }
+    }, {noAck: false});
+  }
+&nbsp;
+&nbsp;
+  /**
+   * async rpc_client - request some task to be done from rpc_server and wait for the result,
+   *                    used together with rpc_server
+   *
+   * @param  {String} queue_name=null           description
+   * @param  {Any} payload=null                 description
+   * @param  {String} correlationId=null        description
+   * @param  {Function} response_activity=null  description
+   */
+  async rpc_client(queue_name=null, payload=null, correlationId=null, response_activity=null){
+&nbsp;
+    if(queue_name===null || payload===null){
+      throw new Error('Queue name and payload is required, as first and second params');
+    }
+&nbsp;
+    <span class="missing-if-branch" title="if path not taken" >I</span>if(correlationId===null || response_activity===null){
+<span class="cstat-no" title="statement not covered" >      throw new Error('correlationId and response_activity is required, as third and fourth params');</span>
+    }
+&nbsp;
+    let self = this;
+&nbsp;
+    let channel = await self.MessagingChannel.create(
+      this.settings.connection.host,
+      this.settings.connection.options.user,
+      this.settings.connection.options.pass
+    );
+&nbsp;
+    let q = await channel.assertQueue('', {exclusive: true});
+&nbsp;
+    channel.consume(q.queue, <span class="fstat-no" title="function not covered" >async function(</span>msg) {
+<span class="cstat-no" title="statement not covered" >      if (msg.properties.correlationId === correlationId) {</span>
+<span class="cstat-no" title="statement not covered" >        await response_activity(msg, channel);</span>
+<span class="cstat-no" title="statement not covered" >        self.successful_rpc = true;</span>
+      }
+    }, {noAck: true});
+&nbsp;
+    self.stringify_payload = JSON.stringify(payload);
+&nbsp;
+    let the_queue = channel.sendToQueue(queue_name, new Buffer(self.stringify_payload),
+                                                    { correlationId: correlationId, replyTo: q.queue });
+&nbsp;
+  }
+&nbsp;
+  /**
+   * async rpc_server - setup service service server for processing some task then give response immediately after finished,
+   *                    used together with rpc_client
+   *
+   * @param  {type} queue_name=null description
+   * @param  {type} activity=null   description
+   * @param  {type} prefetch=3      description
+   * @return {type}                 description
+   */
+  async rpc_server(queue_name=null, activity=null, prefetch=3){
+    if(queue_name===null || activity===null){
+      throw new Error('Queue name and activity is required, as the first and second params');
+    }
+&nbsp;
+    let self = this;
+    let channel = await this.MessagingChannel.create(
+      this.settings.connection.host,
+      this.settings.connection.options.user,
+      this.settings.connection.options.pass
+    );
+&nbsp;
+    await channel.assertQueue(queue_name, {durable: false});
+&nbsp;
+    channel.prefetch(prefetch);
+&nbsp;
+    channel.consume(queue_name, <span class="fstat-no" title="function not covered" >async function <span class="fstat-no" title="function not covered" >reply(</span>msg) {</span>
+<span class="cstat-no" title="statement not covered" >      await activity(msg, channel);</span>
+    });
+&nbsp;
+  }
+&nbsp;
+  async <span class="fstat-no" title="function not covered" >publish(exchange_name, exchange_message)<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >{</span></span></span>
+    let <span class="cstat-no" title="statement not covered" >self = this;</span>
+&nbsp;
+    let channel = <span class="cstat-no" title="statement not covered" >await this.MessagingChannel.create(</span>
+      this.settings.connection.host,
+      this.settings.connection.options.user,
+      this.settings.connection.options.pass
+    );
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    channel.assertExchange(exchange_name, 'fanout', {durable: false});</span>
+&nbsp;
+    let output = <span class="cstat-no" title="statement not covered" >JSON.stringify(exchange_message);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    channel.publish(exchange_name, '', new Buffer(output));</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    console.log(`[o] sent '${output}'`)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return true;</span>
+  }
+&nbsp;
+  async <span class="fstat-no" title="function not covered" >subscribe(exchange_name, callback)<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >{</span></span></span>
+    let <span class="cstat-no" title="statement not covered" >self = this;</span>
+&nbsp;
+    let channel = <span class="cstat-no" title="statement not covered" >await this.MessagingChannel.create(</span>
+      this.settings.connection.host,
+      this.settings.connection.options.user,
+      this.settings.connection.options.pass
+    );
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    channel.assertExchange(exchange_name, 'fanout', {durable: false}) </span>
+&nbsp;
+    let queue_name = <span class="cstat-no" title="statement not covered" >await channel.assertQueue('', {exclusive: true})</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    await channel.bindQueue(queue_name.queue, exchange_name, '')</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    channel.consume(queue_name.queue, <span class="fstat-no" title="function not covered" >msg=&gt;</span>{</span>
+<span class="cstat-no" title="statement not covered" >      callback(JSON.parse(msg.content.toString()))</span>
+    }, {noAck: true})
+  }
+&nbsp;
+  async ping(ping_interval = 3000){
+    let self = this;
+&nbsp;
+    let queue_name = `${process.env.npm_package_name}_heartbeat`
+&nbsp;
+    let interval = await setInterval(async ()=&gt;{
+&nbsp;
+      self.ping_count++;
+&nbsp;
+      await this.publish(`${process.env.npm_package_name}_heartbeat`, 'beat')
+&nbsp;
+    }, ping_interval)
+&nbsp;
+    return interval;
+  }
+&nbsp;
+};
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Mar 22 2018 04:01:01 GMT+0000 (UTC)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>
