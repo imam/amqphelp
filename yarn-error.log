@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add bluebird
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add chance
 
 PATH: 
   C:\Users\Dell\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Dell\bin;C:\Program Files\ImageMagick-7.0.7-Q16;C:\Program Files\ImageMagick-7.0.7-Q8;C:\ProgramData\Oracle\Java\javapath;C:\Program Files\Docker\Docker\Resources\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\xampp\php;C:\ProgramData\ComposerSetup\bin;C:\Program Files\Amazon\AWSCLI;C:\Program Files\OpenSSH\bin;C:\ProgramData\chocolatey\bin;C:\tools\sqlite;C:\Program Files (x86)\Heroku\bin;C:\Program Files (x86)\git\cmd;C:\PostgreSQL\pg96\bin;C:\Program Files (x86)\OpenVPN\bin;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn;C:\Program Files (x86)\Microsoft SQL Server\130\Tools\Binn;C:\Program Files\Microsoft SQL Server\130\Tools\Binn;C:\Program Files\Microsoft SQL Server\130\DTS\Binn;C:\Program Files\CMake\bin;C:\Program Files\nodejs;C:\HashiCorp\Vagrant\bin;C:\Program Files\Git\cmd;C:\Program Files\PuTTY;C:\Program Files (x86)\Windows Kits\8.1\Windows Performance Toolkit;C:\Program Files (x86)\Yarn\bin;C:\Ruby23-x64\bin;C:\Users\Dell\AppData\Local\Microsoft\WindowsApps;C:\Users\Dell\AppData\Roaming\Composer\vendor\bin;C:\Python27;C:\Python27\Scripts;C:\Users\Dell\AppData\Roaming\Python\Scripts;C:\PROGRA~2\Oracle\VirtualBox;C:\Users\Dell\AppData\Local\atom\bin;C:\Program Files\PostgreSQL\9.3\bin;C:\Users\Dell\Homestead\bin;C:\Program Files\Heroku\bin;C:\Program Files\Java\jdk1.8.0_144\bin;C:\Users\Dell\AppData\Local\Turbo\Cmd;D:\Program Files\MongoDB\Server\3.6\bin;C:\msys32\usr\bin;C:\msys32\usr\local\bin;C:\Users\Dell\AppData\Roaming\npm;D:\Qt\Qt5.5.1\5.5\mingw492_32\bin;D:\Program Files\Microsoft VS Code\bin;C:\Users\Dell\AppData\Local\Yarn\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
@@ -16,7 +16,7 @@ Platform:
 npm manifest: 
   {
     "name": "amqphelp",
-    "version": "1.0.19",
+    "version": "1.1.10",
     "description": "helper for amqp",
     "main": "index.js",
     "scripts": {
@@ -25,12 +25,14 @@ npm manifest:
       "build": "npm run clean && mkdir -p dist && babel app -s -D -d dist",
       "test": "NODE_ENV=test USECODE=app mocha --inspect=localhost:5858 --timeout 15000 --require babel-register ./tests/*.*.spec.js ./tests/*/*.*.spec.js --watch",
       "test:once": "NODE_ENV=test USECODE=app mocha --inspect=localhost:5858 --timeout 15000 --require babel-register ./tests/*.*.spec.js ./tests/*/*.*.spec.js",
-      "simulate": "npm run build && NODE_ENV=development nodemon --watch . -L --exec \"node -r babel-register\""
+      "simulate": "npm run build && NODE_ENV=development nodemon --watch . -L --ignore ./dist --exec \"npm run build && node -r babel-register\"",
+      "coverage": "NODE_ENV=test nyc --reporter=lcov --reporter=text-lcov mocha  --timeout 15000 --require babel-register ./tests/*.*.spec.js ./tests/*/*.*.spec.js ./tests/*/*/*.*.spec.js"
     },
     "author": "Antoni <email.to.antoni@gmail.com>",
     "license": "ISC",
     "dependencies": {
       "amqplib": "^0.5.1",
+      "bluebird": "^3.5.1",
       "chai-as-promised": "^7.1.1",
       "lodash": "^4.17.5"
     },
@@ -824,7 +826,7 @@ Lockfile:
     version "3.5.0"
     resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.0.tgz#791420d7f551eea2897453a8a77653f96606d67c"
   
-  bluebird@^3.4.6:
+  bluebird@^3.4.6, bluebird@^3.5.1:
     version "3.5.1"
     resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
   

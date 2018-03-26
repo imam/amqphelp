@@ -162,9 +162,9 @@ class MessagingAction {
      * @param  {String} queue_name=null           description
      * @param  {Any} payload=null                 description
      * @param  {String} correlationId=null        description
-     * @param  {Function} response_activity=null  description
+     * @param  {Function} callback=null  description
      */
-    rpc_client(queue_name = null, payload = null, correlationId = null, response_activity = null) {
+    rpc_client(queue_name = null, payload = null, correlationId = null, callback = null) {
         var _this5 = this;
 
         return _asyncToGenerator(function* () {
@@ -173,8 +173,8 @@ class MessagingAction {
                 throw new Error('Queue name and payload is required, as first and second params');
             }
 
-            if (correlationId === null || response_activity === null) {
-                throw new Error('correlationId and response_activity is required, as third and fourth params');
+            if (correlationId === null || callback === null) {
+                throw new Error('correlationId and callback is required, as third and fourth params');
             }
 
             let self = _this5;
@@ -186,7 +186,7 @@ class MessagingAction {
             channel.consume(q.queue, (() => {
                 var _ref = _asyncToGenerator(function* (msg) {
                     if (msg.properties.correlationId === correlationId) {
-                        yield response_activity(msg, channel);
+                        yield callback(msg, channel);
                         self.successful_rpc = true;
                     }
                 });

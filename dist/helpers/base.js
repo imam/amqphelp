@@ -16,6 +16,11 @@ var _lodash2 = _interopRequireDefault(_lodash);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+let chance = require('chance');
+chance = new chance();
+
 module.exports = class Base {
     constructor({ settings }) {
         this.utils = new _util.MessagingUtil();
@@ -110,7 +115,31 @@ module.exports = class Base {
         receiver._init(this);
     }
 
-    ask(service, action, payload) {}
+    ask(service, action, payload) {
+        return new Promise(resolve => {
+            let correlation = chance.geohash();
+            this.actions.rpc_client(`ask_${action}_from_${service}`, payload, correlation, response => {
+                resolve(response.content.toString());
+            });
+        });
+    }
+
+    answer(action, callback) {
+        this.actions.rpc_server(`ask_${action}_from_${this.service_name}`, (() => {
+            var _ref = _asyncToGenerator(function* (msg, channel) {
+                let callback_result = yield callback(JSON.parse(msg.content.toString()));
+                if (!callback_result) {
+                    callback_result = true;
+                }
+                channel.sendToQueue(msg.properties.replyTo, new Buffer(JSON.stringify(callback_result)), { correlationId: msg.properties.correlationId });
+                channel.ack(msg);
+            });
+
+            return function (_x, _x2) {
+                return _ref.apply(this, arguments);
+            };
+        })());
+    }
 
 };
 //# sourceMappingURL=base.js.map

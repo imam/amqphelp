@@ -2,7 +2,9 @@ import statuses               from './statuses.helper';
 import { MessagingChannel }   from './channel.helper';
 import { MessagingAction }    from './action.helper';
 import { MessagingUtil }      from './util.helper';
-import _ from 'lodash'
+import _ from 'lodash';
+
+let chance = require('chance');
 
 module.exports  = class Base{
     constructor({settings}){
@@ -13,6 +15,8 @@ module.exports  = class Base{
         this.statuses = statuses;
         this._attacher = [];
         this.service_name = process.env.npm_package_name;
+
+        this.chance = new chance;
     }
 
     _getAttacher(attacher_name){
@@ -99,7 +103,23 @@ module.exports  = class Base{
     }
 
     ask(service, action, payload){
-        
+        return new Promise(resolve=>{
+            let correlation = this.chance.geohash()
+            this.actions.rpc_client(`ask_${action}_from_${service}`, payload, correlation, response=>{
+                resolve(response.content.toString())
+            })
+        })
+    }
+
+    answer(action, callback){
+        this.actions.rpc_server(`ask_${action}_from_${this.service_name}`, async(msg, channel)=>{
+            let callback_result = await callback(JSON.parse(msg.content.toString()));
+            if(!callback_result){
+                callback_result = true;
+            }
+            channel.sendToQueue(msg.properties.replyTo, new Buffer(JSON.stringify(callback_result)), {correlationId: msg.properties.correlationId})
+            channel.ack(msg)
+        })
     }
     
 }
