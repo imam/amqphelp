@@ -156,16 +156,16 @@ export class MessagingAction {
    * @param  {String} queue_name=null           description
    * @param  {Any} payload=null                 description
    * @param  {String} correlationId=null        description
-   * @param  {Function} response_activity=null  description
+   * @param  {Function} callback=null  description
    */
-  async rpc_client(queue_name=null, payload=null, correlationId=null, response_activity=null){
+  async rpc_client(queue_name=null, payload=null, correlationId=null, callback=null){
 
     if(queue_name===null || payload===null){
       throw new Error('Queue name and payload is required, as first and second params');
     }
 
-    if(correlationId===null || response_activity===null){
-      throw new Error('correlationId and response_activity is required, as third and fourth params');
+    if(correlationId===null || callback===null){
+      throw new Error('correlationId and callback is required, as third and fourth params');
     }
 
     let self = this;
@@ -180,7 +180,7 @@ export class MessagingAction {
 
     channel.consume(q.queue, async function(msg) {
       if (msg.properties.correlationId === correlationId) {
-        await response_activity(msg, channel);
+        await callback(msg, channel);
         self.successful_rpc = true;
       }
     }, {noAck: true});

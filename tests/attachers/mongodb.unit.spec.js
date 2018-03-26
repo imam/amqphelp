@@ -120,8 +120,9 @@ describe("[ Messaging Helper | Mongodb Attachers]", ()=>{
 
         it("should call _sendToAmqp in _attachToAmqp callback", ()=>{
             expect(_send_to_amqp_stub.calledOnce).to.true
-            expect(_send_to_amqp_stub.firstCall.args[0]).to.equal('test_queue_name')
-            expect(_send_to_amqp_stub.firstCall.args[1]).to.equal('test_doc')
+            expect(_send_to_amqp_stub.firstCall.args[0]).to.equal('test_amqp')
+            expect(_send_to_amqp_stub.firstCall.args[1]).to.equal('test_queue_name')
+            expect(_send_to_amqp_stub.firstCall.args[2]).to.equal('test_doc')
         })
 
         it("should call _depopulator in _attachToAmqp callback", ()=>{
