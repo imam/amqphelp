@@ -8,6 +8,8 @@
 
 To run simulation, do : `npm run simulate -- ./simulation/files_to_be_simulated`
 
+-----
+
 # Ask-Answer
 
 To ease back-and-forth communication between two entities, you can use `ask` and `answer` functionality.
@@ -45,8 +47,6 @@ amqphelp.answer(entityToAsk, payload => {
 }
 
 ```
-
------
 
 # Model
 
