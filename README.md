@@ -40,7 +40,7 @@ In the callback we will give the payload that were given by the answer and you c
 
 ```javascript
 
-amqphelp.answer(entityToAsk, payload => {
+amqphelp.answer(entityName, payload => {
     let payload_to_give_to_the_asker = anyfunction(payload);
     
     return payload_to_give_to_the_asker;
