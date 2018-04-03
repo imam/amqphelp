@@ -22,8 +22,8 @@ module.exports  = class Base{
     _getAttacher(attacher_name){
         return _.findLast(this._attacher, { name: attacher_name })
     }
-    
-    /** 
+
+    /**
      * Register the current service name
     */
     registerServiceName(service_name){
@@ -32,9 +32,9 @@ module.exports  = class Base{
 
     /**
      * Add attacher to singleton
-     * 
+     *
      * @param {string} name Attachers name
-     * @param {object} attacher Object 
+     * @param {object} attacher Object
      */
     registerAttacher(name, attacher){
         this._attacher.push({
@@ -45,8 +45,8 @@ module.exports  = class Base{
 
     /**
      * Model to send
-     * 
-     * @param {string} attacher_name 
+     *
+     * @param {string} attacher_name
      * @param {string} schema Model schema
      * @param {string} services Services to send the message to
      */
@@ -92,7 +92,7 @@ module.exports  = class Base{
                 throw new Error('Name is not defined in object');
             }
             return service;
-        }).value(); 
+        }).value();
     }
 
     /**
@@ -106,7 +106,7 @@ module.exports  = class Base{
         return new Promise(resolve=>{
             let correlation = this.chance.geohash()
             this.actions.rpc_client(`ask_${action}_from_${service}`, payload, correlation, response=>{
-                resolve(response.content.toString())
+                resolve(JSON.parse(response.content.toString()))
             })
         })
     }
@@ -121,5 +121,5 @@ module.exports  = class Base{
             channel.ack(msg)
         })
     }
-    
+
 }
