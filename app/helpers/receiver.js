@@ -13,6 +13,9 @@ module.exports = class AmqpReceiver {
     }
 
     _init(amqp){
+        if(!amqp){
+            throw new Error('amqp is not defined')
+        }
         this.amqp = amqp;
         this.create();
         this.update();

@@ -19,7 +19,7 @@ describe("[ Messaging Helper | Receiver ] ", ()=>{
             receiver_object.update = sinon.spy()
             receiver_object.delete = sinon.spy()
 
-            receiver_object._init();
+            receiver_object._init('test_amqp');
         })
 
         it("should call create", ()=>{
@@ -36,7 +36,12 @@ describe("[ Messaging Helper | Receiver ] ", ()=>{
 
     })
 
-    //TODO::Error call on _init
+    describe("a fail call on _init", ()=>{
+        it('should throw if ampq is not defined', ()=>{
+            let receiver_object = new receiver();
+            expect(()=>{receiver_object._init( undefined )}).to.throw('amqp is not defined')
+        })
+    })
 
     describe("a success call on create", ()=>{
         it("should call receive create once", ()=>{
@@ -49,8 +54,6 @@ describe("[ Messaging Helper | Receiver ] ", ()=>{
             expect(receiver_object.receiveCreate.calledOnce).to.equal(true)
         })
     })
-    
-    //An error call on create
 
     describe("a success call on update", ()=>{
         it("should call receive update once", ()=>{
@@ -64,8 +67,6 @@ describe("[ Messaging Helper | Receiver ] ", ()=>{
         })
     })
 
-    //An error call on update
-
     describe("a success call on delete", ()=>{
         it("should call receive delete once", ()=>{
             let receiver_object = new receiver();
@@ -77,8 +78,6 @@ describe("[ Messaging Helper | Receiver ] ", ()=>{
             expect(receiver_object.receiveDelete.calledOnce).to.equal(true)
         })
     })
-
-    //An error call on delete
 
     describe("a success call on receive create", ()=>{
 
@@ -102,8 +101,6 @@ describe("[ Messaging Helper | Receiver ] ", ()=>{
 
             receiver_object.receiveCreate(callback_spy);
         })
-
-        //should assign console log when no callback passed 
 
         it("should call receive with right arguments", ()=>{
             expect(amqp_receive.firstCall.args[0]).to.equal('create_test_payload_from_test_from_for_test')
@@ -134,8 +131,6 @@ describe("[ Messaging Helper | Receiver ] ", ()=>{
             receiver_object.receiveUpdate(callback_spy);
         })
 
-        //should assign console log when no callback passed 
-
         it("should call receive with right arguments", ()=>{
             expect(amqp_receive.firstCall.args[0]).to.equal('update_test_payload_from_test_from_for_test')
             expect(amqp_receive.firstCall.args[1]).to.equal(callback_spy)
@@ -164,8 +159,6 @@ describe("[ Messaging Helper | Receiver ] ", ()=>{
 
             receiver_object.receiveDelete(callback_spy);
         })
-
-        //should assign console log when no callback passed 
 
         it("should call receive with right arguments", ()=>{
             expect(amqp_receive.firstCall.args[0]).to.equal('delete_test_payload_from_test_from_for_test')
