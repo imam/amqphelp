@@ -10,6 +10,44 @@ To run simulation, do : `npm run simulate -- ./simulation/files_to_be_simulated`
 
 -----
 
+# Ask-Answer
+
+To ease back-and-forth communication between two entities, you can use `ask` and `answer` functionality.
+
+## Ask
+
+If an entity need to 'ask' other entity to do/give something, you can use `ask` like this:
+
+```javascript
+
+amqphelp.ask(entityToAsk, action, payload)
+
+```
+
+It will return a promise that will resolved after the entity that you asked responded to your 'ask'.
+
+## Answer
+
+On the other end, the entity that being asked should answer. `answer` can be used like this:
+
+```javascript
+
+amqphelp.answer(entityToAsk, callback)
+
+```
+
+In the callback we will give the payload that were given by the answer and you can give any values to the asker by returning anything in the callback.
+
+```javascript
+
+amqphelp.answer(entityName, payload => {
+    let payload_to_give_to_the_asker = anyfunction(payload);
+    
+    return payload_to_give_to_the_asker;
+}
+
+```
+
 # Model
 
 We use an opiniated modeling system to ease the development when you want to connect to any database system and monitor any changes (create, update, delete) that they've been made and notify RabbitMq.
