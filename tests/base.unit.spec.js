@@ -263,7 +263,7 @@ describe("[ Messaging Helper | Messaging Base ]", function(){
       base_object.actions.rpc_client = sinon.stub()
       
       base_object.actions.rpc_client.callsFake((queue_name, payload, correlation, callback)=>{
-        callback({content: 'halo'})
+        callback({content: '"halo"'})
       })
       
       await base_object.ask('test_service_name', 'test_action','test_payload')
