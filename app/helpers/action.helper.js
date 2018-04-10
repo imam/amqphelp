@@ -224,6 +224,15 @@ export class MessagingAction {
   }
 
   async publish(exchange_name, exchange_message){
+
+    if(!exchange_name){
+      throw new Error('exchange_name is not defined')
+    }
+
+    if(!exchange_message){
+      throw new Error('exchange_message is not defined')
+    }
+
     let self = this;
 
     let channel = await this.MessagingChannel.create(
@@ -238,12 +247,23 @@ export class MessagingAction {
 
     channel.publish(exchange_name, '', new Buffer(output));
 
-    console.log(`[o] sent '${output}'`)
+    if(process.env == "test"){
+      console.log(`[o] sent '${output}'`)
+    }
 
     return true;
   }
 
   async subscribe(exchange_name, callback){
+
+    if(!exchange_name){
+      throw new Error("exchange_name is not defined")
+    }
+
+    if(!callback){
+      throw new Error("callback is not defined")
+    }
+
     let self = this;
 
     let channel = await this.MessagingChannel.create(

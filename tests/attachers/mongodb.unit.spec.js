@@ -1,10 +1,34 @@
 'use strict';
 
 const pathfinder = require(process.env.PWD + '/pathfinder');
-const expect = require('chai').expect;
+const chai = require('chai')
+const expect = chai.expect;
+const chaiAsPromised = require('chai-as-promised')
 const sinon = require('sinon');
 const mongodbattacher = require(pathfinder.to_attachers() + '/mongodb')
 const _ = require('lodash')
+
+chai.use(chaiAsPromised);
+
+function errorArgumentCall(method, args, error_message){
+    let thrown_error = false;
+    try {
+        method(...args)
+    } catch(e){
+        thrown_error = true;
+        expect(e.message).to.equal(error_message)
+    }
+    if(!thrown_error){
+        throw new Error('Error should be thrown')
+    }
+}
+
+function errorArgumentCallForPromise(method, args, error_message){
+    return method(...args)
+        .catch(e=>{
+            expect(e.message).to.equal(error_message)
+        })
+}
 
 describe("[ Messaging Helper | Mongodb Attachers]", ()=>{
 
@@ -65,6 +89,85 @@ describe("[ Messaging Helper | Mongodb Attachers]", ()=>{
         })
     })
 
+    describe("A fail call on create", ()=>{
+        it("should throw error if queue_name is not defined", ()=>{
+            errorArgumentCall(attacher_object.create, [undefined, 'test_schema_name', 'test_current_service', 'test_service_to', 'test_schema', 'test_amqp', 'test_options'],'queue_name is not defined')
+        })
+
+        it("should throw error if schema_name is not defined", ()=>{
+            expect(()=>{attacher_object.create('test_schema_name', undefined, 'test_current_service', 'test_service_to', 'test_schema', 'test_amqp', 'test_options')}).to.throw('schema_name is not defined')
+        })
+
+        it("should throw error if current_service is not defined", ()=>{
+            expect(()=>{attacher_object.create('test_schema_name', 'test_schema_name', undefined, 'test_service_to', 'test_schema', 'test_amqp', 'test_options')}).to.throw('current_service is not defined')
+        })
+
+        it("should throw error if service_to is not defined", ()=>{
+            expect(()=>{attacher_object.create('test_schema_name', 'test_schema_name', 'test_current_service', undefined, 'test_schema', 'test_amqp', 'test_options')}).to.throw('service_to is not defined')
+        })
+
+        it("should throw error if schema is not defined", ()=>{
+            expect(()=>{attacher_object.create('test_schema_name', 'test_schema_name', 'test_current_service', 'test_service_to', undefined, 'test_amqp', 'test_options')}).to.throw('schema is not defined')
+        })
+
+        it("should throw error if amqp is not defined", ()=>{
+            expect(()=>{attacher_object.create('test_schema_name', 'test_schema_name', 'test_current_service', 'test_service_to', 'test_schema', undefined, 'test_options')}).to.throw('amqp is not defined')
+        })
+    })
+
+    describe("A fail call on update", ()=>{
+        it("should throw error if queue_name is not defined", ()=>{
+            expect(()=>{attacher_object.update(undefined, 'test_schema_name', 'test_current_service', 'test_service_to', 'test_schema', 'test_amqp', 'test_options')}).to.throw('queue_name is not defined')
+        })
+
+        it("should throw error if schema_name is not defined", ()=>{
+            expect(()=>{attacher_object.update('test_schema_name', undefined, 'test_current_service', 'test_service_to', 'test_schema', 'test_amqp', 'test_options')}).to.throw('schema_name is not defined')
+        })
+
+        it("should throw error if current_service is not defined", ()=>{
+            expect(()=>{attacher_object.update('test_schema_name', 'test_schema_name', undefined, 'test_service_to', 'test_schema', 'test_amqp', 'test_options')}).to.throw('current_service is not defined')
+        })
+
+        it("should throw error if service_to is not defined", ()=>{
+            expect(()=>{attacher_object.update('test_schema_name', 'test_schema_name', 'test_current_service', undefined, 'test_schema', 'test_amqp', 'test_options')}).to.throw('service_to is not defined')
+        })
+
+        it("should throw error if schema is not defined", ()=>{
+            expect(()=>{attacher_object.update('test_schema_name', 'test_schema_name', 'test_current_service', 'test_service_to', undefined, 'test_amqp', 'test_options')}).to.throw('schema is not defined')
+        })
+
+        it("should throw error if amqp is not defined", ()=>{
+            expect(()=>{attacher_object.update('test_schema_name', 'test_schema_name', 'test_current_service', 'test_service_to', 'test_schema', undefined, 'test_options')}).to.throw('amqp is not defined')
+        })
+    })
+
+    describe("A fail call on delete", ()=>{
+        it("should throw error if queue_name is not defined", ()=>{
+            expect(()=>{attacher_object.delete(undefined, 'test_schema_name', 'test_current_service', 'test_service_to', 'test_schema', 'test_amqp', 'test_options')}).to.throw('queue_name is not defined')
+        })
+
+        it("should throw error if schema_name is not defined", ()=>{
+            expect(()=>{attacher_object.delete('test_schema_name', undefined, 'test_current_service', 'test_service_to', 'test_schema', 'test_amqp', 'test_options')}).to.throw('schema_name is not defined')
+        })
+
+        it("should throw error if current_service is not defined", ()=>{
+            expect(()=>{attacher_object.delete('test_schema_name', 'test_schema_name', undefined, 'test_service_to', 'test_schema', 'test_amqp', 'test_options')}).to.throw('current_service is not defined')
+        })
+
+        it("should throw error if service_to is not defined", ()=>{
+            expect(()=>{attacher_object.delete('test_schema_name', 'test_schema_name', 'test_current_service', undefined, 'test_schema', 'test_amqp', 'test_options')}).to.throw('service_to is not defined')
+        })
+
+        it("should throw error if schema is not defined", ()=>{
+            expect(()=>{attacher_object.delete('test_schema_name', 'test_schema_name', 'test_current_service', 'test_service_to', undefined, 'test_amqp', 'test_options')}).to.throw('schema is not defined')
+        })
+
+        it("should throw error if amqp is not defined", ()=>{
+            expect(()=>{attacher_object.delete('test_schema_name', 'test_schema_name', 'test_current_service', 'test_service_to', 'test_schema', undefined, 'test_options')}).to.throw('amqp is not defined')
+        })
+    })
+
+
     describe("A call on _sendToAmqp", ()=>{
         it("should call send action", ()=>{
             let amqp_actions_send_stub = sinon.stub();
@@ -80,6 +183,31 @@ describe("[ Messaging Helper | Mongodb Attachers]", ()=>{
             expect(amqp_actions_send_stub.firstCall.args[0]).to.equal('test_queue_name')
             expect(amqp_actions_send_stub.firstCall.args[1]).to.equal('test_doc')
         })
+    })
+
+    describe("a fail call on _sendToAmqp", ()=>{
+
+        it("should throw if amqp is not defined", ()=>{
+            return errorArgumentCallForPromise(
+                attacher_object._sendToAmqp, 
+                [undefined, 'test_queue_name', 'test_doc'],
+                'amqp is not defined')
+        })
+
+        it("should throw if queue_name is not defined", ()=>{
+            return errorArgumentCallForPromise(
+                attacher_object._sendToAmqp, 
+                ['test_amqp', undefined, 'test_doc'],
+                'queue_name is not defined')
+        })
+
+        it("should throw if doc is not defined", ()=>{
+            return errorArgumentCallForPromise(
+                attacher_object._sendToAmqp, 
+                ['test_amqp', 'test_queue_name', undefined],
+                'doc is not defined')
+        })
+
     })
 
     describe("A call on _attachToAmqp", ()=>{
@@ -137,6 +265,36 @@ describe("[ Messaging Helper | Mongodb Attachers]", ()=>{
         })
     })
 
+    describe('A fail call on _attachToAmqp', ()=>{
+        it("should throw error if queue_name is not defined", ()=>{
+            errorArgumentCall(attacher_object._attachToAmqp, [undefined, 'test_schema_name', 'test_current_service', 'test_service_to', 'test_schema', 'test_amqp', 'test_method'], 'queue_name is not defined')
+        })
+
+        it("should throw error if schema_name is not defined", ()=>{
+            errorArgumentCall(attacher_object._attachToAmqp, ['test_queue_name', undefined, 'test_current_service', 'test_service_to', 'test_schema', 'test_amqp', 'test_options', 'test_method'], 'schema_name is not defined')
+        })
+
+        it("should throw error if current_service is not defined", ()=>{
+            errorArgumentCall(attacher_object._attachToAmqp, ['test_queue_name', 'test_schema_name', undefined, 'test_service_to', 'test_schema', 'test_amqp', 'test_options', 'test_method'], 'current_service is not defined')
+        })
+
+        it("should throw error if service_to is not defined", ()=>{
+            errorArgumentCall(attacher_object._attachToAmqp, ['test_queue_name', 'test_schema_name', 'test_current_service', undefined, 'test_schema', 'test_amqp', 'test_options', 'test_method'], 'service_to is not defined')
+        })
+
+        it("should throw error if schema is not defined", ()=>{
+            errorArgumentCall(attacher_object._attachToAmqp, ['test_queue_name', 'test_schema_name', 'test_current_service', 'test_service_to', undefined, 'test_amqp', 'test_options', 'test_method'], 'schema is not defined')
+        })
+
+        it("should throw error if amqp is not defined", ()=>{
+            errorArgumentCall(attacher_object._attachToAmqp, ['test_queue_name', 'test_schema_name', 'test_current_service', 'test_service_to', 'test_schema', undefined, 'test_options', 'test_method'], 'amqp is not defined')
+        })
+
+        it("should throw error if method is not defined", ()=>{
+            errorArgumentCall(attacher_object._attachToAmqp, ['test_queue_name', 'test_schema_name', 'test_current_service', 'test_service_to', 'test_schema', 'test_amqp', 'test_options', undefined], 'method is not defined')
+        })
+    })
+
     describe("A call on _populator", ()=>{
 
         let each_stub, _get_current_service_to_options_stub, doc_populate_stub, doc_exec_populate_stub;
@@ -182,6 +340,16 @@ describe("[ Messaging Helper | Mongodb Attachers]", ()=>{
         })
     })
 
+    describe("A fail call on _populator", ()=>{
+        it("should throw if doc is not defined", ()=>{
+            return errorArgumentCallForPromise(attacher_object._populator, [undefined, 'test_options', 'test_service_to'], 'doc is not defined')
+        })
+
+        it("should throw if service_to is not defined", ()=>{
+            return errorArgumentCallForPromise(attacher_object._populator, ['test_doc', 'test_options', undefined], 'service_to is not defined')
+        })
+    })
+
     describe("A call on _depopulator", ()=>{
 
         let _get_current_service_to_options_stub, doc_depopulate_stub;
@@ -208,12 +376,28 @@ describe("[ Messaging Helper | Mongodb Attachers]", ()=>{
         })
     })
 
+    describe("A fail call on _depopulator", ()=>{
+        it("should throw if doc is not defined", ()=>{
+            return errorArgumentCallForPromise(attacher_object._depopulator, [undefined, 'test_options', 'test_service_to'], 'doc is not defined')
+        })
+
+        it("should throw if service_to is not defined", ()=>{
+            return errorArgumentCallForPromise(attacher_object._depopulator, ['test_doc', 'test_options', undefined], 'service_to is not defined')
+        })
+    })
+
     describe("A call on _getCurrentServiceToOptions", ()=>{
         it("should return correct data", ()=>{
             let to_validate = attacher_object._getCurrentServiceToOptions(['test_should_not_included', {name: 'test_service_to', populate: ['halo']}], 'test_service_to');
 
             expect(to_validate['name']).to.equal('test_service_to')
             expect(to_validate['populate'][0]).equal('halo')
+        })
+    })
+
+    describe("A fail call on _getCurrentServiceToOptions", ()=>{
+        it("should throw if service_to is not defined", ()=>{
+            return errorArgumentCall(attacher_object._getCurrentServiceToOptions, [ 'test_options', undefined], 'service_to is not defined')
         })
     })
 });

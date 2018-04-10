@@ -48,6 +48,28 @@ describe("[ Messaging Helper | Messaging Base ]", function(){
       expect(()=>{base_object.registerServiceName(undefined)}).to.throw('service_name is not defined')
     })
   })
+
+  describe(" success call on registerAttacher", ()=>{
+    it("should call _attacher.push", ()=>{
+      let base_object = new base({settings: {}})
+      base_object.registerAttacher('test_name', 'test_attacher')
+
+      expect(base_object._attacher[0].name).to.equal('test_name')
+      expect(base_object._attacher[0].attacher).to.equal('test_attacher')
+    })
+  })
+
+  describe(" fail call on registerAttacher", ()=>{
+    it("should throw error if name is not defined", ()=>{
+      let base_object = new base({settings: {}})
+      expect(()=>{base_object.registerAttacher(undefined, 'test_attacher')}).to.throw('name is not defined')
+    })
+
+    it("should throw error if attacher is not defined", ()=>{
+      let base_object = new base({settings: {}})
+      expect(()=>{base_object.registerAttacher('test_name', undefined)}).to.throw('attacher is not defined')
+    })
+  })
   
   describe(" success call on model function", ()=>{
     let base_object, _getAttacher_stub, _servicesToMapper_stub, _attachToAttacher_stub;

@@ -45,6 +45,15 @@ module.exports  = class Base{
     * @param {object} attacher Object 
     */
     registerAttacher(name, attacher){
+
+        if(!name){
+            throw new TypeError('name is not defined')
+        }
+
+        if(!attacher){
+            throw new TypeError('attacher is not defined')
+        }
+
         this._attacher.push({
             name,
             attacher
