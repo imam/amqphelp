@@ -41,8 +41,8 @@ module.exports = class Base {
         return _lodash2.default.findLast(this._attacher, { name: attacher_name });
     }
 
-    /** 
-    * Register the current service name
+    /**
+     * Register the current service name
     */
     registerServiceName(service_name) {
         if (!service_name) {
@@ -53,11 +53,11 @@ module.exports = class Base {
     }
 
     /**
-    * Add attacher to singleton
-    * 
-    * @param {string} name Attachers name
-    * @param {object} attacher Object 
-    */
+     * Add attacher to singleton
+     *
+     * @param {string} name Attachers name
+     * @param {object} attacher Object
+     */
     registerAttacher(name, attacher) {
 
         if (!name) {
@@ -75,12 +75,12 @@ module.exports = class Base {
     }
 
     /**
-    * Model to send
-    * 
-    * @param {string} attacher_name 
-    * @param {string} schema Model schema
-    * @param {string} services Services to send the message to
-    */
+     * Model to send
+     *
+     * @param {string} attacher_name
+     * @param {string} schema Model schema
+     * @param {string} services Services to send the message to
+     */
     model(attacher_name, schema_name, schema, services_to) {
         if (!attacher_name) {
             throw new Error('Attacher name is empty');
@@ -169,7 +169,7 @@ module.exports = class Base {
         return new Promise(resolve => {
             let correlation = this.chance.geohash();
             this.actions.rpc_client(`ask_${action}_from_${service}`, payload, correlation, response => {
-                resolve(response.content.toString());
+                resolve(JSON.parse(response.content.toString()));
             });
         });
     }
