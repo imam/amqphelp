@@ -244,6 +244,15 @@ class MessagingAction {
         var _this7 = this;
 
         return _asyncToGenerator(function* () {
+
+            if (!exchange_name) {
+                throw new Error('exchange_name is not defined');
+            }
+
+            if (!exchange_message) {
+                throw new Error('exchange_message is not defined');
+            }
+
             let self = _this7;
 
             let channel = yield _this7.MessagingChannel.create(_this7.settings.connection.host, _this7.settings.connection.options.user, _this7.settings.connection.options.pass);
@@ -254,7 +263,9 @@ class MessagingAction {
 
             channel.publish(exchange_name, '', new Buffer(output));
 
-            console.log(`[o] sent '${output}'`);
+            if (process.env == "test") {
+                console.log(`[o] sent '${output}'`);
+            }
 
             return true;
         })();
@@ -264,6 +275,15 @@ class MessagingAction {
         var _this8 = this;
 
         return _asyncToGenerator(function* () {
+
+            if (!exchange_name) {
+                throw new Error("exchange_name is not defined");
+            }
+
+            if (!callback) {
+                throw new Error("callback is not defined");
+            }
+
             let self = _this8;
 
             let channel = yield _this8.MessagingChannel.create(_this8.settings.connection.host, _this8.settings.connection.options.user, _this8.settings.connection.options.pass);

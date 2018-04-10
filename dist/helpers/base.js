@@ -34,23 +34,40 @@ module.exports = class Base {
     }
 
     _getAttacher(attacher_name) {
+        if (!attacher_name) {
+            throw new TypeError('attacher_name is not defined');
+        }
+
         return _lodash2.default.findLast(this._attacher, { name: attacher_name });
     }
 
     /** 
-     * Register the current service name
+    * Register the current service name
     */
     registerServiceName(service_name) {
+        if (!service_name) {
+            throw new TypeError('service_name is not defined');
+        }
+
         return this.service_name = service_name;
     }
 
     /**
-     * Add attacher to singleton
-     * 
-     * @param {string} name Attachers name
-     * @param {object} attacher Object 
-     */
+    * Add attacher to singleton
+    * 
+    * @param {string} name Attachers name
+    * @param {object} attacher Object 
+    */
     registerAttacher(name, attacher) {
+
+        if (!name) {
+            throw new TypeError('name is not defined');
+        }
+
+        if (!attacher) {
+            throw new TypeError('attacher is not defined');
+        }
+
         this._attacher.push({
             name,
             attacher
@@ -58,12 +75,12 @@ module.exports = class Base {
     }
 
     /**
-     * Model to send
-     * 
-     * @param {string} attacher_name 
-     * @param {string} schema Model schema
-     * @param {string} services Services to send the message to
-     */
+    * Model to send
+    * 
+    * @param {string} attacher_name 
+    * @param {string} schema Model schema
+    * @param {string} services Services to send the message to
+    */
     model(attacher_name, schema_name, schema, services_to) {
         if (!attacher_name) {
             throw new Error('Attacher name is empty');
@@ -86,6 +103,23 @@ module.exports = class Base {
     }
 
     _attachToAttacher(attacher, schema_name, schema, services_to, options) {
+
+        if (!attacher) {
+            throw new Error('attacher is not defined');
+        }
+
+        if (!schema_name) {
+            throw new Error('schema_name is not defined');
+        }
+
+        if (!schema) {
+            throw new Error('schema is not defined');
+        }
+
+        if (!services_to) {
+            throw new Error('services_to is not defined');
+        }
+
         let self = this;
         let current_service = this.service_name;
 
@@ -98,6 +132,9 @@ module.exports = class Base {
 
     // Get all services name and map it into single array
     _servicesToMapper(services_to) {
+        if (!services_to) {
+            throw new Error('services_to is not defined');
+        }
         return (0, _lodash2.default)(services_to).map(service => {
             if (_lodash2.default.isPlainObject(service)) {
                 if (service.name) {
@@ -110,13 +147,25 @@ module.exports = class Base {
     }
 
     /**
-     * Receiver from model entity
-     */
+    * Receiver from model entity
+    */
     modelReceive(receiver) {
+        if (!receiver) {
+            throw new TypeError('receiver is not defined');
+        }
         receiver._init(this);
     }
 
     ask(service, action, payload) {
+        if (!service) {
+            throw new TypeError('service is not defined');
+        }
+        if (!action) {
+            throw new TypeError('action is not defined');
+        }
+        if (!payload) {
+            throw new TypeError('payload is not defined');
+        }
         return new Promise(resolve => {
             let correlation = this.chance.geohash();
             this.actions.rpc_client(`ask_${action}_from_${service}`, payload, correlation, response => {
@@ -126,6 +175,12 @@ module.exports = class Base {
     }
 
     answer(action, callback) {
+        if (!action) {
+            throw new TypeError('action is not defined');
+        }
+        if (!callback) {
+            throw new TypeError('callback is not defined');
+        }
         this.actions.rpc_server(`ask_${action}_from_${this.service_name}`, (() => {
             var _ref = _asyncToGenerator(function* (msg, channel) {
                 let callback_result = yield callback(JSON.parse(msg.content.toString()));

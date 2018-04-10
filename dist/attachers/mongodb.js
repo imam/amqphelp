@@ -16,24 +16,141 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 module.exports = class MongoDB extends _bind2.default {
 
     create(queue_name, schema_name, current_service, service_to, schema, amqp, options) {
+
+        if (!queue_name) {
+            throw new Error('queue_name is not defined');
+        }
+
+        if (!schema_name) {
+            throw new Error('schema_name is not defined');
+        }
+
+        if (!current_service) {
+            throw new Error('current_service is not defined');
+        }
+
+        if (!service_to) {
+            throw new Error('service_to is not defined');
+        }
+
+        if (!schema) {
+            throw new Error('schema is not defined');
+        }
+
+        if (!amqp) {
+            throw new Error('amqp is not defined');
+        }
+
         return this._attachToAmqp(queue_name, schema_name, current_service, service_to, schema, amqp, options, 'save');
     }
 
     update(queue_name, schema_name, current_service, service_to, schema, amqp, options) {
+
+        if (!queue_name) {
+            throw new Error('queue_name is not defined');
+        }
+
+        if (!schema_name) {
+            throw new Error('schema_name is not defined');
+        }
+
+        if (!current_service) {
+            throw new Error('current_service is not defined');
+        }
+
+        if (!service_to) {
+            throw new Error('service_to is not defined');
+        }
+
+        if (!schema) {
+            throw new Error('schema is not defined');
+        }
+
+        if (!amqp) {
+            throw new Error('amqp is not defined');
+        }
+
         return this._attachToAmqp(queue_name, schema_name, current_service, service_to, schema, amqp, options, 'update');
     }
 
     delete(queue_name, schema_name, current_service, service_to, schema, amqp, options) {
+
+        if (!queue_name) {
+            throw new Error('queue_name is not defined');
+        }
+
+        if (!schema_name) {
+            throw new Error('schema_name is not defined');
+        }
+
+        if (!current_service) {
+            throw new Error('current_service is not defined');
+        }
+
+        if (!service_to) {
+            throw new Error('service_to is not defined');
+        }
+
+        if (!schema) {
+            throw new Error('schema is not defined');
+        }
+
+        if (!amqp) {
+            throw new Error('amqp is not defined');
+        }
+
         return this._attachToAmqp(queue_name, schema_name, current_service, service_to, schema, amqp, options, 'remove');
     }
 
     _sendToAmqp(amqp, queue_name, doc) {
         return _asyncToGenerator(function* () {
+
+            if (!amqp) {
+                throw new Error('amqp is not defined');
+            }
+
+            if (!queue_name) {
+                throw new Error('queue_name is not defined');
+            }
+
+            if (!doc) {
+                throw new Error('doc is not defined');
+            }
+
             yield amqp.actions.send(queue_name, doc);
         })();
     }
 
     _attachToAmqp(queue_name, schema_name, current_service, service_to, schema, amqp, options, method) {
+
+        if (!queue_name) {
+            throw new Error('queue_name is not defined');
+        }
+
+        if (!schema_name) {
+            throw new Error('schema_name is not defined');
+        }
+
+        if (!current_service) {
+            throw new Error('current_service is not defined');
+        }
+
+        if (!service_to) {
+            throw new Error('service_to is not defined');
+        }
+
+        if (!schema) {
+            throw new Error('schema is not defined');
+        }
+
+        if (!amqp) {
+            throw new Error('amqp is not defined');
+        }
+
+        if (!method) {
+            throw new Error('method is not defined');
+        }
+
         let self = this;
         return new Promise((() => {
             var _ref = _asyncToGenerator(function* (resolve) {
@@ -65,6 +182,14 @@ module.exports = class MongoDB extends _bind2.default {
 
         return _asyncToGenerator(function* () {
 
+            if (!doc) {
+                throw new Error('doc is not defined');
+            }
+
+            if (!service_to) {
+                throw new Error('service_to is not defined');
+            }
+
             options = _this._getCurrentServiceToOptions(options, service_to);
 
             if (options) {
@@ -87,6 +212,14 @@ module.exports = class MongoDB extends _bind2.default {
 
         return _asyncToGenerator(function* () {
 
+            if (!doc) {
+                throw new Error('doc is not defined');
+            }
+
+            if (!service_to) {
+                throw new Error('service_to is not defined');
+            }
+
             options = _this2._getCurrentServiceToOptions(options, service_to);
 
             if (options) {
@@ -104,6 +237,11 @@ module.exports = class MongoDB extends _bind2.default {
     }
 
     _getCurrentServiceToOptions(options, service_to) {
+
+        if (!service_to) {
+            throw new Error('service_to is not defined');
+        }
+
         let data = (0, _lodash2.default)(options).filter(_lodash2.default.isPlainObject).filter(value => value.populate).filter(value => value.name == service_to).value()[0];
         if (data) {
             return data;
