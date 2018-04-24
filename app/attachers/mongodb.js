@@ -140,8 +140,16 @@ module.exports = class MongoDB extends Bind{
         
         let self = this;
         return new Promise(async (resolve)=>{
+            if(method == 'save'){
+                schema.pre('save', function (next) {
+                    this.wasNew = this.isNew;
+                    next();
+                });
+            }
             schema.post(method, async function(doc, next){
-                
+                if(!doc.wasNew && method == 'save'){
+                    queue_name = queue_name.replace('create_', 'update_')
+                }
                 await self._populator(doc, options, service_to)
                 await self._sendToAmqp(amqp, queue_name, doc)
                 await self._depopulator(doc, options, service_to);

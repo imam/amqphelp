@@ -154,9 +154,17 @@ module.exports = class MongoDB extends _bind2.default {
         let self = this;
         return new Promise((() => {
             var _ref = _asyncToGenerator(function* (resolve) {
+                if (method == 'save') {
+                    schema.pre('save', function (next) {
+                        this.wasNew = this.isNew;
+                        next();
+                    });
+                }
                 schema.post(method, (() => {
                     var _ref2 = _asyncToGenerator(function* (doc, next) {
-
+                        if (!doc.wasNew && method == 'save') {
+                            queue_name = queue_name.replace('create_', 'update_');
+                        }
                         yield self._populator(doc, options, service_to);
                         yield self._sendToAmqp(amqp, queue_name, doc);
                         yield self._depopulator(doc, options, service_to);

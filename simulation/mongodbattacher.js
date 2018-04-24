@@ -16,12 +16,16 @@ const Test = mongoose.model('Test', testSchema)
 
 const data = new Test({title: 'Halooo', subtitle: "ho"})
 
-data.save(err=>{
+data.save(async err=>{
     if(err) console.log(err);
 
-    data.update({title: 'yaaa'}, err=>{
-        if(err) console.log(err)
-    })
+    data.title = 'ganti'
 
-    data.remove()
+    await data.save();
+
+    // data.update({title: 'yaaa'}, err=>{
+    //     if(err) console.log(err)
+    // })
+
+    await data.remove()
 })

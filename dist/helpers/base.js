@@ -41,8 +41,8 @@ module.exports = class Base {
         return _lodash2.default.findLast(this._attacher, { name: attacher_name });
     }
 
-    /**
-     * Register the current service name
+    /** 
+    * Register the current service name
     */
     registerServiceName(service_name) {
         if (!service_name) {
