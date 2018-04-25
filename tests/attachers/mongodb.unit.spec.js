@@ -212,10 +212,12 @@ describe("[ Messaging Helper | Mongodb Attachers]", ()=>{
 
     describe("A call on _attachToAmqp", ()=>{
 
-        let schema_post, schema, _populator_stub, _send_to_amqp_stub, _depopulator_stub, next_stub;
+        let schema_pre, schema_post, schema, _populator_stub, _send_to_amqp_stub, _depopulator_stub, next_stub;
 
         beforeEach(async ()=>{
             schema_post = sinon.stub();
+
+            schema_pre = sinon.stub();
 
             next_stub = sinon.stub();
 
@@ -228,7 +230,8 @@ describe("[ Messaging Helper | Mongodb Attachers]", ()=>{
             _depopulator_stub = sinon.stub(attacher_object, '_depopulator')
 
             schema = {
-                post: schema_post
+                post: schema_post,
+                pre: schema_pre
             }
 
             await attacher_object._attachToAmqp('test_queue_name', 'test_schema_name', 'test_current_service', 'test_service_to', schema, 'test_amqp', 'test_options', 'test_method')
@@ -244,6 +247,35 @@ describe("[ Messaging Helper | Mongodb Attachers]", ()=>{
             expect(_populator_stub.firstCall.args[0]).to.equal('test_doc')
             expect(_populator_stub.firstCall.args[1]).to.equal('test_options')
             expect(_populator_stub.firstCall.args[2]).to.equal('test_service_to')
+        })
+
+        it("queue_name should changed to update if method is save and wasNew is not true", async ()=>{
+            let this_schema, next_pre_stub, schemaPreThis;
+
+            this_schema = {
+                isNew: true
+            }
+
+            next_pre_stub = sinon.stub()
+
+            schema_pre.callsFake((method, callback)=>{
+                schemaPreThis = {
+                    isNew: true,
+                }
+                callback = callback.bind(schemaPreThis)
+
+                callback(next_pre_stub);
+            })
+            
+            schema_post = sinon.stub();
+            schema_post.callsFake((method, callback)=>{
+                callback(schemaPreThis, next_stub);
+            })
+
+            await attacher_object._attachToAmqp('create_test_queue_name', 'test_schema_name', 'test_current_service', 'test_service_to', schema, 'test_amqp', 'test_options', 'save')
+
+            expect(schemaPreThis.wasNew).to.true
+            expect(_send_to_amqp_stub.lastCall.args[1]).to.equal('update_test_queue_name')
         })
 
         it("should call _sendToAmqp in _attachToAmqp callback", ()=>{
