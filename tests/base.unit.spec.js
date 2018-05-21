@@ -275,7 +275,8 @@ describe("[ Messaging Helper | Messaging Base ]", function(){
     
     it("should call rpc_client", ()=>{
       expect(base_object.actions.rpc_client.firstCall.args[0]).to.equal('ask_test_action_from_test_service_name')
-      expect(base_object.actions.rpc_client.firstCall.args[1]).to.equal('test_payload')
+      expect(base_object.actions.rpc_client.firstCall.args[1].payload).to.equal('test_payload')
+      expect(base_object.actions.rpc_client.firstCall.args[1].entity_from).to.equal('amqphelp')
       expect(base_object.actions.rpc_client.firstCall.args[2]).to.equal('test_geohash')
     })
     
@@ -319,7 +320,7 @@ describe("[ Messaging Helper | Messaging Base ]", function(){
       });
       
       base_object.actions.rpc_server.callsFake((queue_name, callback)=>{
-        callback({content: '"test"', properties: {replyTo: 'test_reply_to', correlationId: 'test_correlationId'}}, channel_stub);
+        callback({content: '{"payload":"test", "entity_from":"test_from"}', properties: {replyTo: 'test_reply_to', correlationId: 'test_correlationId'}}, channel_stub);
       })
       
       callback_stub = sinon.stub();
@@ -345,7 +346,7 @@ describe("[ Messaging Helper | Messaging Base ]", function(){
     
     it("should call ack", ()=>{
       expect(channel_stub.ack.calledOnce).to.true
-      expect(channel_stub.ack.firstCall.args[0].content).to.equal('"test"')
+      expect(channel_stub.ack.firstCall.args[0].content).to.equal('{"payload":"test", "entity_from":"test_from"}')
       expect(channel_stub.ack.firstCall.args[0].properties.replyTo).to.equal('test_reply_to')
       expect(channel_stub.ack.firstCall.args[0].properties.correlationId).to.equal('test_correlationId')
     })
