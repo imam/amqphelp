@@ -8,6 +8,10 @@ const _ = require('lodash')
 
 let default_settings = require(`${path_to_default_setttings}`);
 
+process.on('unhandledRejection', e => {
+	console.error(e);
+});
+
 //Default settings parser
 if(result.parsed){
 	let convert = {
