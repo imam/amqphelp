@@ -19,6 +19,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 let chance = require('chance');
+let ms = require('ms');
 
 module.exports = class Base {
     constructor({ settings }) {
@@ -53,11 +54,11 @@ module.exports = class Base {
     }
 
     /**
-     * Add attacher to singleton
-     *
-     * @param {string} name Attachers name
-     * @param {object} attacher Object
-     */
+    * Add attacher to singleton
+    *
+    * @param {string} name Attachers name
+    * @param {object} attacher Object
+    */
     registerAttacher(name, attacher) {
 
         if (!name) {
@@ -75,12 +76,12 @@ module.exports = class Base {
     }
 
     /**
-     * Model to send
-     *
-     * @param {string} attacher_name
-     * @param {string} schema Model schema
-     * @param {string} services Services to send the message to
-     */
+    * Model to send
+    *
+    * @param {string} attacher_name
+    * @param {string} schema Model schema
+    * @param {string} services Services to send the message to
+    */
     model(attacher_name, schema_name, schema, services_to) {
         if (!attacher_name) {
             throw new Error('Attacher name is empty');
@@ -156,36 +157,81 @@ module.exports = class Base {
         receiver._init(this);
     }
 
-    ask(service, action, payload) {
+    ask(service, action, payload, options) {
+
         if (!service) {
             throw new TypeError('service is not defined');
         }
+
         if (!action) {
             throw new TypeError('action is not defined');
         }
+
         if (!payload) {
             throw new TypeError('payload is not defined');
         }
+
+        if (process.env.NODE_ENV !== 'test') {
+            console.log(`asking ${service} for ${action} with ${JSON.stringify(payload)}`);
+        }
+
+        let opts = {
+            ttl: 4000
+        };
+
+        if (options && options.ttl) {
+            if (!Number.isInteger(options.ttl)) {
+                options.ttl = ms(options.ttl);
+            }
+            opts.ttl = options.ttl;
+        }
+
+        let expired_at = Date.now() + opts.ttl;
+
         return new Promise(resolve => {
             let correlation = this.chance.geohash();
-            this.actions.rpc_client(`ask_${action}_from_${service}`, payload, correlation, response => {
+            this.actions.rpc_client(`ask_${action}_from_${service}`, { entity_from: process.env.npm_package_name, expired_at, payload }, correlation, response => {
                 resolve(JSON.parse(response.content.toString()));
-            });
+            }, opts);
         });
     }
 
     answer(action, callback) {
+
         if (!action) {
             throw new TypeError('action is not defined');
         }
+
         if (!callback) {
             throw new TypeError('callback is not defined');
         }
+
         this.actions.rpc_server(`ask_${action}_from_${this.service_name}`, (() => {
             var _ref = _asyncToGenerator(function* (msg, channel) {
-                let callback_result = yield callback(JSON.parse(msg.content.toString()));
+                let parsed_content = JSON.parse(msg.content.toString());
+                if (Date.now() > parsed_content.expired_at) {
+                    let expired_at_in_date = new Date();
+                    console.log(`skipped one ${action} request from ${parsed_content.entity_from} because it's expired at ${expired_at_in_date.toDateString()} ${expired_at_in_date.toTimeString()}`);
+                    channel.ack(msg);
+                    return true;
+                }
+                console.log(`answering ${action} from ${JSON.parse(msg.content.toString()).entity_from}`);
+                let callback_result;
+                try {
+                    callback_result = yield callback(JSON.parse(msg.content.toString()).payload);
+                } catch (e) {
+                    callback_result = { error_message: `Error in answerer with message: ${e.message}` };
+                    console.log(`Error answering a message from ${JSON.parse(msg.content.toString()).entity_from} to ${action} with message: ${e.message}`);
+                }
                 if (!callback_result) {
                     callback_result = true;
+                }
+
+                if (Date.now() > parsed_content.expired_at) {
+                    let expired_at_in_date = new Date();
+                    console.log(`cancelled to send one ${action} request to ${parsed_content.entity_from} because it's expired at ${expired_at_in_date.toDateString()} ${expired_at_in_date.toTimeString()}`);
+                    channel.ack(msg);
+                    return true;
                 }
                 channel.sendToQueue(msg.properties.replyTo, new Buffer(JSON.stringify(callback_result)), { correlationId: msg.properties.correlationId });
                 channel.ack(msg);
